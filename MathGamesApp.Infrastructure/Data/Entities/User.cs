@@ -9,10 +9,12 @@ namespace MathGamesApp.Infrastructure.Data.Entities
 {
     public class User : IdentityUser
     {
-                //FirstName and LastName: To store the user's first and last name.
-                //DateOfBirth: To store the user's date of birth.
-                //Gender: To store the user's gender.
-                //Country and City: To store the user's location.
-                //ProfilePictureUrl: To store a URL to the user's profile picture.
+        public string FirstName { get; set; } = null!;
+
+        public string LastName { get; set; } = null!;
+        //DateOfBirth: To store the user's date of birth.
+        //Gender: To store the user's gender.
+        //Country and City: To store the user's location.
+        //ProfilePictureUrl: To store a URL to the user's profile picture.
     }
 }
