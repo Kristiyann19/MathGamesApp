@@ -8,14 +8,16 @@ using System.Threading.Tasks;
 
 namespace MathGamesApp.Infrastructure.Data.Entities
 {
-    public class Game //The game that you select to play
+    public class Problem //The game that you select to play
     {
+        //MAYBE ADD EXPERIENCE OR THINK ABOUT A WAY TO DO THE LEVEL UPPING!
+
         [Key]
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(30)]
-        public string Name { get; set; } = null!;
+        [Range(1, 7)]
+        public int DifficultyLevel { get; set; }
 
         [Required]
         [MaxLength(500)]
@@ -31,28 +33,23 @@ namespace MathGamesApp.Infrastructure.Data.Entities
         [Required]
         public bool IsActive { get; set; }
 
+        //Maybe delete this later
         [Required]
         [Range(0.0, 5.0)]
         public double AverageRating { get; set; }
 
         [Required]
-        public int GameCategoryId { get; set; }
+        public int ProblemCategoryId { get; set; }
 
-        [ForeignKey(nameof(GameCategoryId))]
-        public GameCategory GameCategory { get; set; } = null!;
-
-
-        [Required]
-        public int GameTypeId { get; set; }
-
-        [ForeignKey(nameof(GameTypeId))]
-        public GameType GameType { get; set; } = null!;
+        [ForeignKey(nameof(ProblemCategoryId))]
+        public ProblemCategory ProblemCategory { get; set; } = null!;
 
 
         [Required]
-        public int GameLevelId { get; set; }
+        public int ProblemTypeId { get; set; }
 
-        [ForeignKey(nameof(GameLevelId))]
-        public GameLevel GameLevel { get; set; } = null!;
+        [ForeignKey(nameof(ProblemTypeId))]
+        public ProblemType ProblemType { get; set; } = null!;
+
     }
 }

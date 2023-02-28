@@ -11,10 +11,9 @@ namespace MathGamesApp.Infrastructure.Data
         {
         }
 
-        public DbSet<Game> Games { get; set; }
-        public DbSet<GameCategory> GameCategories { get; set; }
-        public DbSet<GameType> GameTypes { get; set; }
-        public DbSet<GameLevel> GameLevels { get; set; }
+        public DbSet<Problem> Problems { get; set; }
+        public DbSet<ProblemCategory> ProblemCategories { get; set; }
+        public DbSet<ProblemType> ProblemTypes { get; set; }
         public DbSet<UserLevel> UserLevels { get; set; }
 
 

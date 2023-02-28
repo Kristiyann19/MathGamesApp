@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MathGamesApp.Infrastructure.Data.Entities
 {
-    public class GameCategory //Algebra, Geometry etc.
+    public class ProblemCategory //Algebra, Geometry etc.
     {
         [Key]
         public int Id { get; set; }
@@ -20,13 +20,12 @@ namespace MathGamesApp.Infrastructure.Data.Entities
         [MaxLength(500)]
         public string Description { get; set; }
 
+
         [Required]
         public string ImageUrl { get; set; }
 
-        [Required]
-        public bool IsActive { get; set; }
 
         [Required]
-        public List<GameType> GamesTypes { get; set; } = new List<GameType>();   
+        public List<ProblemType> GamesTypes { get; set; } = new List<ProblemType>();   
     }
 }
