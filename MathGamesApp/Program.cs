@@ -1,3 +1,5 @@
+using MathGamesApp.Core.Contracts;
+using MathGamesApp.Core.Services;
 using MathGamesApp.Infrastructure.Data;
 using MathGamesApp.Infrastructure.Data.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +16,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IProblemService, ProblemService>();
+
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
-﻿using MathGamesApp.Models;
+﻿using MathGamesApp.Core.Contracts;
+using MathGamesApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +7,19 @@ namespace MathGamesApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IProblemService problemService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IProblemService _carService)
         {
-            _logger = logger;
+            problemService = _carService;
         }
 
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var categories = await problemService.GetAllCategoriesAsync();
+
+            return View(categories);
         }
 
         public IActionResult Privacy()
@@ -23,10 +27,6 @@ namespace MathGamesApp.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        
     }
 }
