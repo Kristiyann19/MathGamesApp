@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,12 @@ namespace MathGamesApp.Infrastructure.Data.Entities
 
         [Required]
         public bool IsActive { get; set; }
+
+        [Required]
+        public int ProblemCategoryId { get; set; }
+
+        [ForeignKey(nameof(ProblemCategoryId))]
+        public ProblemCategory ProblemCategory { get; set; } = null!;
 
         [Required]
         public List<Problem> Games { get; set; } = new List<Problem>();

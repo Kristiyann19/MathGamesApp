@@ -1,8 +1,23 @@
-﻿@{
+﻿@using MathGamesApp.Core.Models
+@model IEnumerable<ProblemCategoryViewModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<div class="text-center row">
+    @foreach (var category in Model)
+    {
+        <div class="card col-4" style="width: 20rem; ">
+            <img class="card-img-top" style="width: 18rem;"
+             src="@category.ImageUrl" alt="Category Image">
+            <div class="card-body">
+
+                <h5 class="card-title mt-1">@category.Name</h5>
+                <p class="mb-0">Year: @category.Description</p>
+                
+            </div>                 
+        </div>
+    }
+</div> 
+

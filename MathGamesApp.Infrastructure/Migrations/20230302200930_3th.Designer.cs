@@ -4,6 +4,7 @@ using MathGamesApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MathGamesApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230302200930_3th")]
+    partial class _3th
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,29 +109,6 @@ namespace MathGamesApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProblemCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Traditional operations on numbers - addition, subtraction, multiplication, division, exponentiation",
-                            ImageUrl = "https://media.proprofs.com/images/QM/user_images/2169923/1514977691.jpg",
-                            Name = "Arithmetic"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Algebra deals with the manipulation of variables and the rules for manipulating these variables in formulas",
-                            ImageUrl = "https://st3.depositphotos.com/3591429/13656/i/450/depositphotos_136562916-stock-photo-creative-website-banner.jpg",
-                            Name = "Algebra"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Geometry is concerned with the shapes of individual objects or shapes and their properties",
-                            ImageUrl = "https://www.gyanipandit.com/en/wp-content/uploads/2021/06/Geometry-2cde81a7.jpg",
-                            Name = "Geometry"
-                        });
                 });
 
             modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.ProblemType", b =>
@@ -165,26 +144,6 @@ namespace MathGamesApp.Infrastructure.Migrations
                     b.HasIndex("ProblemCategoryId");
 
                     b.ToTable("ProblemTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ImageUrl = "https://www.theschoolrun.com/sites/theschoolrun.com/files/article_images/addition.jpg",
-                            Instruction = "Add numbers together",
-                            IsActive = false,
-                            Name = "Addition",
-                            ProblemCategoryId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ImageUrl = "https://www.theschoolrun.com/sites/theschoolrun.com/files/article_images/subtraction.png",
-                            Instruction = "Take away one number from another",
-                            IsActive = false,
-                            Name = "Subtraction",
-                            ProblemCategoryId = 1
-                        });
                 });
 
             modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.User", b =>

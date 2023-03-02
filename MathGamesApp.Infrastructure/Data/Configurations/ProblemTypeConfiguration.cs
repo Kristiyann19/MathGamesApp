@@ -24,8 +24,20 @@ namespace MathGamesApp.Infrastructure.Data.Configurations
                 {
                     Id = 1,
                     Name = "Addition",
-                    Instruction = "Add numbers together"
+                    Instruction = "Add numbers together",
+                    ProblemCategoryId = 1,
+                    ImageUrl = "https://www.theschoolrun.com/sites/theschoolrun.com/files/article_images/addition.jpg"
+
+                },
+                new ProblemType()
+                {
+                    Id = 2,
+                    Name = "Subtraction",
+                    Instruction = "Take away one number from another",
+                    ProblemCategoryId = 1,
+                    ImageUrl = "https://www.theschoolrun.com/sites/theschoolrun.com/files/article_images/subtraction.png"
                 }
+                
             };
 
             return problemTypes;
