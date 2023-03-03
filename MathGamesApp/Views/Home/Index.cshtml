@@ -8,25 +8,23 @@
 <div class="row">
     @foreach (var category in Model)
     {
-        <div class="col-md-4 mb-4">
+        <div class="col-md-3 mb-4">
             <div class="category-card">
                 <div class="category-card-header">
                     <h5 class="category-card-name">@category.Name</h5>
+                    <form class="category-card-description" asp-controller="Problem" asp-action="Description" asp-route-id="@category.Id">
+                        <input type="submit" value="?" class="category-card-description" />
+                    </form>
                 </div>
                 <div class="category-card-img">
                     <img src="@category.ImageUrl" alt="Category Image" />
-                </div>
-                <form class="category-card-description" asp-controller="Problem" asp-action="Description" asp-route-id="@category.Id">
-                        <input type="submit" value="?" class="category-card-description" />
-                    </form>
-                @*<div class="category-card-description" style="display: none;">
-                    <p>@category.Description</p>
-                </div>*@
+                </div>               
             </div>
         </div>
     }
 </div>
 
+@*Should move the css somewhere else*@
 <style>
     .category-card {
         border-radius: 5px;
@@ -45,6 +43,9 @@
         width: 100%;
     }
     .category-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         padding: 20px;
     }
     .category-card-name {
