@@ -36,5 +36,20 @@ namespace MathGamesApp.Core.Services
                     ImageUrl = c.ImageUrl
                 });
         }
+
+        public async Task<ProblemCategoryViewModel> GetCategoryDescriptionAsync(int id)
+        {
+            return await context.ProblemCategories
+                .Where(c => c.Id == id)
+                .Select(c => new ProblemCategoryViewModel
+                {
+                    Id = c.Id,
+                    Name= c.Name,
+                    Description= c.Description,
+                    ImageUrl = c.ImageUrl
+                })
+                .FirstAsync();
+  
+        }
     }
 }

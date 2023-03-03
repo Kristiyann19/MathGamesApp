@@ -9,9 +9,9 @@ namespace MathGamesApp.Controllers
     {
         private readonly IProblemService problemService;
 
-        public HomeController(IProblemService _carService)
+        public HomeController(IProblemService _problemService)
         {
-            problemService = _carService;
+            problemService = _problemService;
         }
 
 

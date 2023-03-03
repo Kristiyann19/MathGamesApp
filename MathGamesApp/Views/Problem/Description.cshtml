@@ -1,33 +1,26 @@
 ﻿@using MathGamesApp.Core.Models
-@model IEnumerable<ProblemCategoryViewModel>
+@model ProblemCategoryViewModel
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Description";
 }
 
-<div class="row">
-    @foreach (var category in Model)
-    {
-        <div class="col-md-4 mb-4">
+<div class="col-md-4 mb-4">
             <div class="category-card">
                 <div class="category-card-header">
-                    <h5 class="category-card-name">@category.Name</h5>
+                    <h5 class="category-card-name">@Model.Name</h5>
                 </div>
                 <div class="category-card-img">
-                    <img src="@category.ImageUrl" alt="Category Image" />
+                    <img src="@Model.ImageUrl" alt="Category Image" />
+                </div> 
+                <div class="category-card-description">
+                    <p>@Model.Description</p>
                 </div>
-                <form class="category-card-description" asp-controller="Problem" asp-action="Description" asp-route-id="@category.Id">
-                        <input type="submit" value="?" class="category-card-description" />
-                    </form>
-                @*<div class="category-card-description" style="display: none;">
-                    <p>@category.Description</p>
-                </div>*@
             </div>
         </div>
-    }
-</div>
 
-<style>
+
+        <style>
     .category-card {
         border-radius: 5px;
         box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
@@ -52,6 +45,3 @@
     }
     
 </style>
-
-
-
