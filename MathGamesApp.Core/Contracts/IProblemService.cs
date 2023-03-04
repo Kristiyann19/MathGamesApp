@@ -12,5 +12,9 @@ namespace MathGamesApp.Core.Contracts
         Task<IEnumerable<ProblemCategoryViewModel>> GetAllCategoriesAsync();
 
         Task<ProblemCategoryViewModel> GetCategoryDescriptionAsync(int id);
+
+        Task<ProblemTypeViewModel> GetTypeInformationAsync(int id);
+
+        Task<IEnumerable<ProblemTypeViewModel>> GetAllTypesByCategoryAsync(int categoryId);
     }
 }

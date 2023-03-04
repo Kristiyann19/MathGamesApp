@@ -1,0 +1,55 @@
+﻿@using MathGamesApp.Core.Models
+@model IEnumerable<ProblemTypeViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    @foreach (var type in Model)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="type-card">
+                <div class="type-card-header">
+                    <h5 class="type-card-name">@type.Name</h5>    
+                    <form class="type-card-description" asp-controller="Problem" asp-action="Information" asp-route-id="@type.Id">
+                        <input type="submit" value="?"/>
+                    </form>
+                </div>
+                <div class="type-card-img">
+                    <img src="@type.ImageUrl" alt="Category Image" />
+                </div>               
+            </div>
+        </div>
+    }
+</div>
+
+@*Should move the css somewhere else*@
+<style>
+    .type-card {
+        border-radius: 5px;
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        transition: box-shadow 0.2s ease-in-out;
+    }
+    .type-card:hover {
+        box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+    }
+    .type-card-img {
+        height: 200px;
+        overflow: hidden;
+    }
+    .type-card-img img {
+        width: 100%;
+    }
+    .type-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+    }
+    .type-card-name {
+        margin-bottom: 0;
+    }
+    
+</style>

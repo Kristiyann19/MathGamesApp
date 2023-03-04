@@ -37,6 +37,24 @@ namespace MathGamesApp.Core.Services
                 });
         }
 
+        public async Task<IEnumerable<ProblemTypeViewModel>> GetAllTypesByCategoryAsync(int categoryId)
+        {
+            var entities = await context.ProblemTypes
+                .Include(c => c.ProblemCategory)
+                .Where(c => c.ProblemCategory.Id == categoryId)
+                .ToListAsync();
+
+            return entities
+                .Select(c => new ProblemTypeViewModel
+                {
+                    ProblemCategoryId = c.ProblemCategory.Id,
+                    Id = c.Id,
+                    ImageUrl = c.ImageUrl,
+                    Instruction = c.Instruction,
+                    Name = c.Name
+                });
+        }
+
         public async Task<ProblemCategoryViewModel> GetCategoryDescriptionAsync(int id)
         {
             return await context.ProblemCategories
@@ -50,6 +68,21 @@ namespace MathGamesApp.Core.Services
                 })
                 .FirstAsync();
   
+        }
+
+        public async Task<ProblemTypeViewModel> GetTypeInformationAsync(int id)
+        {
+            return await context.ProblemTypes
+               .Where(c => c.Id == id)
+               .Select(c => new ProblemTypeViewModel
+               {
+                   Id = c.Id,
+                   Name = c.Name,
+                   ImageUrl = c.ImageUrl,
+                   Instruction= c.Instruction,
+                   
+               })
+               .FirstAsync();
         }
     }
 }

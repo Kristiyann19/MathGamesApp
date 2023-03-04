@@ -1,0 +1,50 @@
+﻿@using MathGamesApp.Core.Models
+@model ProblemTypeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+    <div class="col-md-3 mb-4">
+            <div class="type-card">
+                <div class="type-card-header">
+                    <h5 class="type-card-name">@Model.Name</h5>                      
+                </div>
+                <div class="type-card-img">
+                    <img src="@Model.ImageUrl" alt="Category Image" />
+                </div>  
+                <div class="type-card-information">
+                    <p>@Model.Instruction</p>
+                </div>
+            </div>
+        </div>
+  
+
+@*Should move the css somewhere else*@
+<style>
+    .type-card {
+        border-radius: 5px;
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        transition: box-shadow 0.2s ease-in-out;
+    }
+    .type-card:hover {
+        box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+    }
+    .type-card-img {
+        height: 200px;
+        overflow: hidden;
+    }
+    .type-card-img img {
+        width: 100%;
+    }
+    .type-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+    }
+    .type-card-name {
+        margin-bottom: 0;
+    }
+    
+</style>

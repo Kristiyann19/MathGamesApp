@@ -20,5 +20,22 @@ namespace MathGamesApp.Controllers
 
             return View(categoryModel);
         }
+
+        public async Task<IActionResult> Information(int id)
+        {
+
+            var typeModel = await problemService.GetTypeInformationAsync(id);
+
+            return View(typeModel);
+        }
+
+        [HttpGet]
+        [HttpPost]
+        public async Task<IActionResult> GetProblemType(int categoryId)
+        {
+            var types = await problemService.GetAllTypesByCategoryAsync(categoryId);
+
+            return View(types);
+        }
     }
 }
