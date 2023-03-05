@@ -52,7 +52,7 @@ namespace MathGamesApp.Infrastructure.Data
             {
                 builder.ApplyConfiguration(new ProblemCategoryConfiguration());
                 builder.ApplyConfiguration(new ProblemTypeConfiguration());
-                builder.ApplyConfiguration(new ProblemConfiguration());
+                //builder.ApplyConfiguration(new ProblemConfiguration());
                 
             }
 

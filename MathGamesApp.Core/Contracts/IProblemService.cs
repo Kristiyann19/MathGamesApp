@@ -1,4 +1,5 @@
 ﻿using MathGamesApp.Core.Models;
+using MathGamesApp.Core.Models.Problem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace MathGamesApp.Core.Contracts
         Task<ProblemTypeViewModel> GetTypeInformationAsync(int id);
 
         Task<IEnumerable<ProblemTypeViewModel>> GetAllTypesByCategoryAsync(int categoryId);
+
+        Task<ProblemViewModel> GetRandomAdditionProblem(int difficultyLevel);
     }
 }

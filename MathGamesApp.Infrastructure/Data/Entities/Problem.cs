@@ -20,6 +20,9 @@ namespace MathGamesApp.Infrastructure.Data.Entities
         public int DifficultyLevel { get; set; }
 
         [Required]
+        public string CorrectAnswer { get; set; } = null!;
+
+        [Required]
         [MaxLength(500)]
         public string Description { get; set; } = null!;
 
