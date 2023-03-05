@@ -73,7 +73,7 @@ namespace MathGamesApp.Core.Services
   
         }
 
-        public async Task<ProblemViewModel> GenerateRandomAdditionProblem(ProblemViewModel model,int difficultyLevel)
+        public ProblemViewModel GetRandomAdditionProblem(int difficultyLevel)
         {
             int maxDigit = difficultyLevel * 2;
             int firstDigit;
@@ -90,24 +90,25 @@ namespace MathGamesApp.Core.Services
             int secondDigit = random.Next(0, maxDigit + 1);
             int correctAnswer = firstDigit + secondDigit;
 
-            var problem = new ProblemViewModel
+            var problem = new ProblemViewModel()
             {
-                DifficultyLevel = model.DifficultyLevel,
-                Description = $"What is {firstDigit} + {secondDigit}?",
-                ImageUrl = "https://example.com/image.jpg",
+                CorrectAnswer = correctAnswer.ToString(),
+                DifficultyLevel = difficultyLevel,
+                Description = $"What is {firstDigit} + {secondDigit}",
                 Instruction = "Enter the correct answer.",
-                IsActive = true,
-                AverageRating = 0.0,
-                ProblemCategoryId = 1, // or whatever category id you want to assign
-                ProblemTypeId = 1,
-                CorrectAnswer = correctAnswer.ToString()
+                IsActive = true
             };
 
-            context.Problems.Add(problem);
-            context.SaveChanges();
-
             return problem;
+
         }
+
+        public bool CheckAnswer(ProblemViewModel problem, int answer)
+        {
+            int correctAnswer = int.Parse(problem.CorrectAnswer);
+            return answer == correctAnswer;
+        }
+
 
         public async Task<ProblemTypeViewModel> GetTypeInformationAsync(int id)
         {
@@ -120,8 +121,12 @@ namespace MathGamesApp.Core.Services
                    ImageUrl = c.ImageUrl,
                    Instruction= c.Instruction,
                    
+                   
                })
                .FirstAsync();
         }
+
+       
+        
     }
 }

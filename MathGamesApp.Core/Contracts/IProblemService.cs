@@ -18,6 +18,8 @@ namespace MathGamesApp.Core.Contracts
 
         Task<IEnumerable<ProblemTypeViewModel>> GetAllTypesByCategoryAsync(int categoryId);
 
-        Task<ProblemViewModel> GetRandomAdditionProblem(int difficultyLevel);
+        ProblemViewModel GetRandomAdditionProblem(int difficultyLevel);
+
+        bool CheckAnswer(ProblemViewModel problem, int answer);
     }
 }

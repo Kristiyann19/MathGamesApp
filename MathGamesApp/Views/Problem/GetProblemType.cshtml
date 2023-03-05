@@ -11,7 +11,8 @@
         <div class="col-md-3 mb-4">
             <div class="type-card">
                 <div class="type-card-header">
-                    <h5 class="type-card-name">@type.Name</h5>    
+                    <h5 class="type-card-name">@type.Name</h5>  
+                     <div class="type-card" onclick="location.href='@Url.Action("GetRandomAdditionProblem", "Problem", new { problemId = problemType.Id })';" style="cursor: pointer;">
                     <form class="type-card-description" asp-controller="Problem" asp-action="Information" asp-route-id="@type.Id">
                         <input type="submit" value="?"/>
                     </form>
