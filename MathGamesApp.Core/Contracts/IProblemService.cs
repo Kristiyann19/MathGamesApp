@@ -20,5 +20,7 @@ namespace MathGamesApp.Core.Contracts
         Task<IEnumerable<ProblemTypeViewModel>> GetAllTypesByCategoryAsync(int categoryId);
 
         Task<IEnumerable<DifficultyLevelsViewModel>> GetAllDifficultyLevelsAsync();
+
+        List<Problem> GenerateProblemsByLevel(int difficultyLevel);
     }
 }

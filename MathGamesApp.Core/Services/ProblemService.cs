@@ -23,6 +23,8 @@ namespace MathGamesApp.Core.Services
 
         }
 
+        private readonly Random random = new Random();
+
         public async Task<IEnumerable<ProblemCategoryViewModel>> GetAllCategoriesAsync()
         {
 
@@ -136,6 +138,69 @@ namespace MathGamesApp.Core.Services
                     Id = e.Id,
                     Name = e.Name
                 });
+        }
+
+        public List<Problem> GenerateProblemsByLevel(int difficultyLevelId)
+        {
+            var problems = new List<Problem>();
+            var random = new Random();
+
+            
+
+            for (int i = 0; i < 10; i++)
+            {
+                int num1 = 0;
+                int num2 = 0;
+                int answer;
+
+                if (difficultyLevelId == 1)
+                {
+                    num1  = random.Next(1, 10);
+                    num2 = random.Next(1, 10);
+                }
+                else if (difficultyLevelId == 2)
+                {
+                    num1 = random.Next(1, 100);
+                    num2 = random.Next(1, 100);
+                }
+                else if (difficultyLevelId == 3)
+                {
+                    num1 = random.Next(10, 150);
+                    num2 = random.Next(10, 150);
+                }
+                else if (difficultyLevelId == 4)
+                {
+                    num1 = random.Next(100, 1000);
+                    num2 = random.Next(100, 1000);
+                }
+                else if (difficultyLevelId == 5)
+                {
+                    num1 = random.Next(-100, 100);
+                    num2 = random.Next(10, 1000);
+                }
+                else if (difficultyLevelId == 6)
+                {
+                    num1 = random.Next(-1000, 100);
+                    num2 = random.Next(100, 1000);
+                }
+                else if (difficultyLevelId == 7)
+                {
+                    num1 = random.Next(-1000, 100);
+                    num2 = random.Next(-1000, 100);
+                }
+
+                answer = num1 + num2;
+
+                problems.Add(new Problem
+                {
+                    Answer = answer,
+                    Description = $"What is the sum of {num1} and {num2}?",
+                    DifficultyLevelId = difficultyLevelId
+                });
+            }
+
+            return problems;    
+           
         }
     }
 }

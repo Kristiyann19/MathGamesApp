@@ -8,12 +8,33 @@ namespace MathGamesApp.Controllers
     public class ProblemController : Controller
     {
         private readonly IProblemService problemService;  
+        private readonly ApplicationDbContext context;
 
-        public ProblemController(IProblemService _problemService)
+        public ProblemController(IProblemService _problemService, ApplicationDbContext _context)
         {
             problemService = _problemService;
+            context = _context;
         }
 
+        public IActionResult GenerateProblem(int difficultyLevelId)
+        {
+            var difficultyLevel = context.DifficultyLevels.SingleOrDefault(dl => dl.Id == difficultyLevelId);
+
+            if (difficultyLevel == null)
+            {
+                return NotFound();
+            }
+
+
+            var problems = problemService.GenerateProblemsByLevel(difficultyLevel.Id)
+                .Select(p => new ProblemViewModel
+                {
+                    Description = p.Description,
+                    Answer = p.Answer,
+                    DifficultyLevelId = p.DifficultyLevelId
+                });
+            return View(problems);
+        }
 
         public async Task<IActionResult> Description(int id)
         {

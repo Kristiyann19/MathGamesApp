@@ -1,0 +1,15 @@
+﻿@using MathGamesApp.Core.Models.Problem
+@model IEnumerable<ProblemViewModel>
+
+@{
+    ViewData["Title"] = "Generate Problem";
+}
+
+<div class="row">
+    @foreach(var problem in Model)
+    {
+        <h5 class="problem-card-name">@problem.Description</h5>
+        <h5 class="problem-card-name">@problem.Answer</h5>
+        <h5 class="problem-card-name">@problem.Instruction</h5>
+    }
+</div>
