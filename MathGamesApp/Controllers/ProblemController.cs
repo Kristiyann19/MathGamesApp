@@ -1,12 +1,13 @@
 ﻿using MathGamesApp.Core.Contracts;
 using MathGamesApp.Core.Models.Problem;
+using MathGamesApp.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MathGamesApp.Controllers
 {
     public class ProblemController : Controller
     {
-        private readonly IProblemService problemService;
+        private readonly IProblemService problemService;  
 
         public ProblemController(IProblemService _problemService)
         {
@@ -39,35 +40,43 @@ namespace MathGamesApp.Controllers
             return View(types);
         }
 
-        public IActionResult GetRandomAdditionProblem(int difficultyLevel)
+        public async Task<IActionResult> GetDifficultyLevels()
         {
-            var problem = problemService.GetRandomAdditionProblem(difficultyLevel);
+            var levels = await problemService.GetAllDifficultyLevelsAsync();
 
-            return View(problem);
+            return View(levels);
         }
 
-    
-        [HttpPost]
-        public IActionResult RandomAdditionProblem(string answer)
-        {
-            int userAnswer;
-            bool isNumeric = int.TryParse(answer, out userAnswer);
 
-            if (!isNumeric)
-            {
-                ViewBag.Result = "Please enter a valid number.";
-            }
-            else if (problemService.CheckAnswer(ViewBag.Problem, userAnswer))
-            {
-                ViewBag.Result = "Correct!";
-            }
-            else
-            {
-                ViewBag.Result = "Incorrect. Please try again.";
-            }
+        //public IActionResult GetRandomAdditionProblem(int difficultyLevel)
+        //{
+        //    var problem = problemService.GetRandomAdditionProblem(difficultyLevel);
 
-            return View();
-        }
+        //    return View(problem);
+        //}
+
+
+        //[HttpPost]
+        //public IActionResult RandomAdditionProblem(string answer)
+        //{
+        //    int userAnswer;
+        //    bool isNumeric = int.TryParse(answer, out userAnswer);
+
+        //    if (!isNumeric)
+        //    {
+        //        ViewBag.Result = "Please enter a valid number.";
+        //    }
+        //    else if (problemService.CheckAnswer(ViewBag.Problem, userAnswer))
+        //    {
+        //        ViewBag.Result = "Correct!";
+        //    }
+        //    else
+        //    {
+        //        ViewBag.Result = "Incorrect. Please try again.";
+        //    }
+
+        //    return View();
+        //}
     }
 }
 

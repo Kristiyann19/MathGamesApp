@@ -2,28 +2,28 @@
 @model IEnumerable<ProblemTypeViewModel>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Problem Type";
 }
 
 <div class="row">
     @foreach (var type in Model)
     {
         <div class="col-md-3 mb-4">
-            <div class="type-card">
+            <div class="type-card" onclick="location.href='@Url.Action("GetDifficultyLevels", "Problem", new { typeId = type.Id })';" style="cursor: pointer;">
                 <div class="type-card-header">
-                    <h5 class="type-card-name">@type.Name</h5>  
-                     <div class="type-card" onclick="location.href='@Url.Action("GetRandomAdditionProblem", "Problem", new { problemId = problemType.Id })';" style="cursor: pointer;">
+                    <h5 class="type-card-name">@type.Name</h5>
                     <form class="type-card-description" asp-controller="Problem" asp-action="Information" asp-route-id="@type.Id">
                         <input type="submit" value="?"/>
                     </form>
                 </div>
                 <div class="type-card-img">
-                    <img src="@type.ImageUrl" alt="Category Image" />
-                </div>               
+                    <img src="@type.ImageUrl" alt="Type Image" />
+                </div>
             </div>
         </div>
     }
 </div>
+
 
 @*Should move the css somewhere else*@
 <style>

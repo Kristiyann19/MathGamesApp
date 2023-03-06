@@ -15,19 +15,19 @@ namespace MathGamesApp.Core.Services
     public class ProblemService : IProblemService
     {
         private readonly ApplicationDbContext context;
-        private readonly Random random;
+
 
         public ProblemService(ApplicationDbContext _context)
         {
             context = _context;
-            random = new Random();
+
         }
 
         public async Task<IEnumerable<ProblemCategoryViewModel>> GetAllCategoriesAsync()
         {
 
 
-            var entities = await context.ProblemCategories               
+            var entities = await context.ProblemCategories
                 .ToListAsync();
 
             return entities
@@ -65,49 +65,49 @@ namespace MathGamesApp.Core.Services
                 .Select(c => new ProblemCategoryViewModel
                 {
                     Id = c.Id,
-                    Name= c.Name,
-                    Description= c.Description,
+                    Name = c.Name,
+                    Description = c.Description,
                     ImageUrl = c.ImageUrl
                 })
                 .FirstAsync();
-  
-        }
-
-        public ProblemViewModel GetRandomAdditionProblem(int difficultyLevel)
-        {
-            int maxDigit = difficultyLevel * 2;
-            int firstDigit;
-
-            if (difficultyLevel > 5)
-            {
-                firstDigit = random.Next(-maxDigit, maxDigit + 1);
-            }
-            else
-            {
-                firstDigit = random.Next(0, maxDigit + 1);
-            }
-
-            int secondDigit = random.Next(0, maxDigit + 1);
-            int correctAnswer = firstDigit + secondDigit;
-
-            var problem = new ProblemViewModel()
-            {
-                CorrectAnswer = correctAnswer.ToString(),
-                DifficultyLevel = difficultyLevel,
-                Description = $"What is {firstDigit} + {secondDigit}",
-                Instruction = "Enter the correct answer.",
-                IsActive = true
-            };
-
-            return problem;
 
         }
 
-        public bool CheckAnswer(ProblemViewModel problem, int answer)
-        {
-            int correctAnswer = int.Parse(problem.CorrectAnswer);
-            return answer == correctAnswer;
-        }
+        //public ProblemViewModel GetRandomAdditionProblem(int difficultyLevel)
+        //{
+        //    //int maxDigit = difficultyLevel * 2;
+        //    //int firstDigit;
+
+        //    //if (difficultyLevel > 5)
+        //    //{
+        //    //    firstDigit = random.Next(-maxDigit, maxDigit + 1);
+        //    //}
+        //    //else
+        //    //{
+        //    //    firstDigit = random.Next(maxDigit + 1);
+        //    //}
+
+        //    //int secondDigit = random.Next(maxDigit + 1);
+        //    //int correctAnswer = firstDigit + secondDigit;
+
+        //    //var problem = new ProblemViewModel()
+        //    //{
+        //    //    CorrectAnswer = correctAnswer.ToString(),
+        //    //    DifficultyLevel = difficultyLevel,
+        //    //    Description = $"What is {firstDigit} + {secondDigit}",
+        //    //    Instruction = "Enter the correct answer.",
+        //    //    IsActive = true
+        //    //};
+
+        //    //return problem;
+
+        //}
+
+        //public bool CheckAnswer(ProblemViewModel problem, int answer)
+        //{
+        //    int correctAnswer = int.Parse(problem.CorrectAnswer);
+        //    return answer == correctAnswer;
+        //}
 
 
         public async Task<ProblemTypeViewModel> GetTypeInformationAsync(int id)
@@ -119,14 +119,23 @@ namespace MathGamesApp.Core.Services
                    Id = c.Id,
                    Name = c.Name,
                    ImageUrl = c.ImageUrl,
-                   Instruction= c.Instruction,
-                   
-                   
+                   Instruction = c.Instruction,
+
+
                })
                .FirstAsync();
         }
 
-       
-        
+        public async Task<IEnumerable<DifficultyLevelsViewModel>> GetAllDifficultyLevelsAsync()
+        {
+            var entities = await context.DifficultyLevels.ToListAsync();
+
+            return entities
+                .Select(e => new DifficultyLevelsViewModel
+                {
+                    Id = e.Id,
+                    Name = e.Name
+                });
+        }
     }
 }

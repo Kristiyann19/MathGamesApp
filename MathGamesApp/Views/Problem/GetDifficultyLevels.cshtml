@@ -1,0 +1,13 @@
+﻿@using MathGamesApp.Core.Models.Problem
+@model IEnumerable<DifficultyLevelsViewModel>
+
+@{
+    ViewData["Title"] = "Difficulty Level";
+}
+
+<div class="row">
+    @foreach(var levels in Model)
+    {
+        <h5 class="levels-card-name">@levels.Name</h5>
+    }
+</div>

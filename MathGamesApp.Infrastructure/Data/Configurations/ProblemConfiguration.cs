@@ -23,15 +23,7 @@ namespace MathGamesApp.Infrastructure.Data.Configurations
             {
                 new Problem()
                 {
-                    Id = 1,
-                    DifficultyLevel = 1,
-                    AverageRating = 5,
-                    Description = "s",
-                    ImageUrl = "https://www.theschoolrun.com/sites/theschoolrun.com/files/article_images/addition.jpg",
-                    Instruction = "test",
-                    ProblemCategoryId = 1,
-                    IsActive = true,
-                    ProblemTypeId = 1
+                   
 
                 }
             };
