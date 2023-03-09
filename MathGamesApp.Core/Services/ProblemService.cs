@@ -75,43 +75,7 @@ namespace MathGamesApp.Core.Services
 
         }
 
-        //public ProblemViewModel GetRandomAdditionProblem(int difficultyLevel)
-        //{
-        //    //int maxDigit = difficultyLevel * 2;
-        //    //int firstDigit;
-
-        //    //if (difficultyLevel > 5)
-        //    //{
-        //    //    firstDigit = random.Next(-maxDigit, maxDigit + 1);
-        //    //}
-        //    //else
-        //    //{
-        //    //    firstDigit = random.Next(maxDigit + 1);
-        //    //}
-
-        //    //int secondDigit = random.Next(maxDigit + 1);
-        //    //int correctAnswer = firstDigit + secondDigit;
-
-        //    //var problem = new ProblemViewModel()
-        //    //{
-        //    //    CorrectAnswer = correctAnswer.ToString(),
-        //    //    DifficultyLevel = difficultyLevel,
-        //    //    Description = $"What is {firstDigit} + {secondDigit}",
-        //    //    Instruction = "Enter the correct answer.",
-        //    //    IsActive = true
-        //    //};
-
-        //    //return problem;
-
-        //}
-
-        //public bool CheckAnswer(ProblemViewModel problem, int answer)
-        //{
-        //    int correctAnswer = int.Parse(problem.CorrectAnswer);
-        //    return answer == correctAnswer;
-        //}
-
-
+        
         public async Task<ProblemTypeViewModel> GetTypeInformationAsync(int id)
         {
             return await context.ProblemTypes
@@ -130,7 +94,8 @@ namespace MathGamesApp.Core.Services
 
         public async Task<IEnumerable<DifficultyLevelsViewModel>> GetAllDifficultyLevelsAsync()
         {
-            var entities = await context.DifficultyLevels.ToListAsync();
+            var entities = await context.DifficultyLevels
+                .ToListAsync();
 
             return entities
                 .Select(e => new DifficultyLevelsViewModel
@@ -140,22 +105,20 @@ namespace MathGamesApp.Core.Services
                 });
         }
 
-        public List<Problem> GenerateProblemsByLevel(int difficultyLevelId)
+        public IEnumerable<AdditionProblemViewModel> GenerateAdditionProblemsByLevel(int difficultyLevelId)
         {
-            var problems = new List<Problem>();
             var random = new Random();
-
-            
+            var problems = new List<AdditionProblemViewModel>();
 
             for (int i = 0; i < 10; i++)
             {
                 int num1 = 0;
                 int num2 = 0;
-                int answer;
+                int? answer;
 
                 if (difficultyLevelId == 1)
                 {
-                    num1  = random.Next(1, 10);
+                    num1 = random.Next(1, 10);
                     num2 = random.Next(1, 10);
                 }
                 else if (difficultyLevelId == 2)
@@ -185,22 +148,53 @@ namespace MathGamesApp.Core.Services
                 }
                 else if (difficultyLevelId == 7)
                 {
-                    num1 = random.Next(-1000, 100);
-                    num2 = random.Next(-1000, 100);
+                    num1 = random.Next(-1000, 1000);
+                    num2 = random.Next(-1000, 1000);
                 }
 
                 answer = num1 + num2;
 
-                problems.Add(new Problem
+                var problem = new AdditionProblemViewModel()
                 {
+                    Description = $"What is the sum between {num1} and {num2}",
+                    DifficultyLevelId = difficultyLevelId,
                     Answer = answer,
-                    Description = $"What is the sum of {num1} and {num2}?",
-                    DifficultyLevelId = difficultyLevelId
-                });
+                    UserAnswer = null, // initialize to null
+                    IsCorrect = false
+                    //Write category and type id 
+                };
+
+                problems.Add(problem);
             }
 
-            return problems;    
-           
+            return problems;
         }
+
+
+        public bool CheckAdditionProblemAnswers(IEnumerable<AdditionProblemViewModel> problems)
+        {
+            bool allCorrect = true;
+
+            foreach (var problem in problems)
+            {
+                // only check problems where user has provided an answer
+                if (problem.UserAnswer.HasValue)
+                {
+                    problem.IsCorrect = problem.UserAnswer == problem.Answer;
+                    allCorrect &= problem.IsCorrect;
+                }
+            }
+
+            return allCorrect;
+        }
+
+        //public List<AdditionProblemViewModel> CheckAnswers(List<AdditionProblemViewModel> problems)
+        //{
+        //    foreach (var problem in problems)
+        //    {
+        //        problem.IsCorrect = problem.UserAnswer == problem.Answer;
+        //    }
+        //    return problems;
+        //}
     }
 }

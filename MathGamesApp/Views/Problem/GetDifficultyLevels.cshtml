@@ -6,10 +6,10 @@
 }
 
 <div class="row">
-    @foreach(var levels in Model)
+    @foreach(var level in Model)
     {
-       <a asp-controller="Problem" asp-action="GenerateProblem" asp-route-difficultyLevelId="@levels.Id">
-                        <input type="submit" value="@levels.Name"/>
+       <a asp-controller="Problem" asp-action="GenerateAdditionProblems" asp-route-difficultyLevelId="@level.Id">
+                        <input type="submit" value="@level.Name"/>
        </a>
 
         //<h5 class="levels-card-name">@levels.Name</h5>

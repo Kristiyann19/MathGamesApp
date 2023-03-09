@@ -1,6 +1,7 @@
 ﻿using MathGamesApp.Core.Contracts;
 using MathGamesApp.Core.Models.Problem;
 using MathGamesApp.Infrastructure.Data;
+using MathGamesApp.Infrastructure.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MathGamesApp.Controllers
@@ -16,25 +17,61 @@ namespace MathGamesApp.Controllers
             context = _context;
         }
 
-        public IActionResult GenerateProblem(int difficultyLevelId)
+
+        public IActionResult GenerateAdditionProblems(int difficultyLevelId)
         {
-            var difficultyLevel = context.DifficultyLevels.SingleOrDefault(dl => dl.Id == difficultyLevelId);
+            var problems = problemService.GenerateAdditionProblemsByLevel(difficultyLevelId);
 
-            if (difficultyLevel == null)
+            var additionProblemViewModels = problems.Select(p => new AdditionProblemViewModel
             {
-                return NotFound();
-            }
+                Id = p.Id,
+                Description = p.Description,
+                UserAnswer = p.UserAnswer
+                // initialize answer to null as user has not submitted anything yet
+            });
 
-
-            var problems = problemService.GenerateProblemsByLevel(difficultyLevel.Id)
-                .Select(p => new ProblemViewModel
-                {
-                    Description = p.Description,
-                    Answer = p.Answer,
-                    DifficultyLevelId = p.DifficultyLevelId
-                });
-            return View(problems);
+            return View(additionProblemViewModels);
         }
+
+        [HttpPost]
+        public IActionResult CheckAnswers(IEnumerable<AdditionProblemViewModel> problems)
+        {
+            var allCorrect = problemService.CheckAdditionProblemAnswers(problems);
+
+            if (allCorrect)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return RedirectToAction("GenerateAdditionProblems", new { difficultyLevelId = problems.First().DifficultyLevelId });
+            }
+        }
+
+        //public IActionResult GenerateProblem(int difficultyLevelId, int problemTypeId)
+        //{
+        //    var difficultyLevel = context.DifficultyLevels.SingleOrDefault(dl => dl.Id == difficultyLevelId);
+        //    var problemType = context.ProblemTypes.SingleOrDefault(p => p.Id == problemTypeId);
+
+        //    if (difficultyLevel == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+
+        //    var problems = problemService.GenerateProblemsByLevel(difficultyLevel.Id)
+        //        .Select(p => new ProblemViewModel
+        //        {
+        //            Id = p.Id,
+        //            Description = p.Description,
+        //            Answer = p.Answer,
+        //            DifficultyLevelId = p.DifficultyLevelId,
+
+        //        });
+
+        //    return View(problems);
+        //}
+
 
         public async Task<IActionResult> Description(int id)
         {
@@ -69,35 +106,16 @@ namespace MathGamesApp.Controllers
         }
 
 
-        //public IActionResult GetRandomAdditionProblem(int difficultyLevel)
-        //{
-        //    var problem = problemService.GetRandomAdditionProblem(difficultyLevel);
-
-        //    return View(problem);
-        //}
-
-
         //[HttpPost]
-        //public IActionResult RandomAdditionProblem(string answer)
+        //public ActionResult CheckAnswers(List<Problem> problems, List<int> answers)
         //{
-        //    int userAnswer;
-        //    bool isNumeric = int.TryParse(answer, out userAnswer);
-
-        //    if (!isNumeric)
-        //    {
-        //        ViewBag.Result = "Please enter a valid number.";
-        //    }
-        //    else if (problemService.CheckAnswer(ViewBag.Problem, userAnswer))
-        //    {
-        //        ViewBag.Result = "Correct!";
-        //    }
-        //    else
-        //    {
-        //        ViewBag.Result = "Incorrect. Please try again.";
-        //    }
+        //    List<bool> results = problemService.CheckAnswers(problems, answers);
+        //    ViewBag.Results = results;
 
         //    return View();
         //}
+
+       
     }
 }
 

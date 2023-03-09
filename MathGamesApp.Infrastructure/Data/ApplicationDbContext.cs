@@ -29,6 +29,7 @@ namespace MathGamesApp.Infrastructure.Data
         public DbSet<ProblemType> ProblemTypes { get; set; }
         public DbSet<UserLevel> UserLevels { get; set; }
         public DbSet<DifficultyLevel> DifficultyLevels { get; set; }
+        public DbSet<AdditionProblem> AdditionProblems { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -45,8 +46,6 @@ namespace MathGamesApp.Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(x => x.ProblemCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-
 
 
             if (seedDb)

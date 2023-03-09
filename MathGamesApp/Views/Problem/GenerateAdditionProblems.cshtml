@@ -1,0 +1,42 @@
+﻿@using MathGamesApp.Core.Models.Problem
+
+@model IEnumerable<AdditionProblemViewModel>
+
+<form asp-controller="Problem" asp-action="CheckAnswers" method="post">
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Your Answer</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var problem in Model)
+            {
+                <tr>
+                    <td>@problem.Description</td>
+                    <td><input type="number" name="@($"problems.{problem.Description}.UserAnswer")" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit">Check Answers</button>
+</form>
+
+@*@model IEnumerable<AdditionProblemViewModel>
+
+@{
+    ViewData["Title"] = "Generate Problem";
+}
+
+
+    <div class="row">
+        @foreach(var problem in Model)
+        {
+            <h5 class="problem-card-name">@problem.Description</h5>
+            <input type="hidden"  value="@problem.Id" />
+            <input type="number"  placeholder="Enter your answer" />
+        }
+    </div>
+    <button type="submit">Check Answers</button>
+*@
