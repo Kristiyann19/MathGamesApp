@@ -34,7 +34,7 @@ namespace MathGamesApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CheckAnswers(IEnumerable<AdditionProblemViewModel> problems)
+        public IActionResult CheckAnswers(List<AdditionProblemViewModel> problems)
         {
             var allCorrect = problemService.CheckAdditionProblemAnswers(problems);
 
@@ -47,30 +47,6 @@ namespace MathGamesApp.Controllers
                 return RedirectToAction("GenerateAdditionProblems", new { difficultyLevelId = problems.First().DifficultyLevelId });
             }
         }
-
-        //public IActionResult GenerateProblem(int difficultyLevelId, int problemTypeId)
-        //{
-        //    var difficultyLevel = context.DifficultyLevels.SingleOrDefault(dl => dl.Id == difficultyLevelId);
-        //    var problemType = context.ProblemTypes.SingleOrDefault(p => p.Id == problemTypeId);
-
-        //    if (difficultyLevel == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-
-        //    var problems = problemService.GenerateProblemsByLevel(difficultyLevel.Id)
-        //        .Select(p => new ProblemViewModel
-        //        {
-        //            Id = p.Id,
-        //            Description = p.Description,
-        //            Answer = p.Answer,
-        //            DifficultyLevelId = p.DifficultyLevelId,
-
-        //        });
-
-        //    return View(problems);
-        //}
 
 
         public async Task<IActionResult> Description(int id)
@@ -105,17 +81,6 @@ namespace MathGamesApp.Controllers
             return View(levels);
         }
 
-
-        //[HttpPost]
-        //public ActionResult CheckAnswers(List<Problem> problems, List<int> answers)
-        //{
-        //    List<bool> results = problemService.CheckAnswers(problems, answers);
-        //    ViewBag.Results = results;
-
-        //    return View();
-        //}
-
-       
     }
 }
 

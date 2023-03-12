@@ -15,11 +15,12 @@ namespace MathGamesApp.Core.Services
     public class ProblemService : IProblemService
     {
         private readonly ApplicationDbContext context;
+        private readonly List<AdditionProblemViewModel> problems;   
 
-
-        public ProblemService(ApplicationDbContext _context)
+        public ProblemService(ApplicationDbContext _context, List<AdditionProblemViewModel> _problems)
         {
             context = _context;
+            problems = _problems;
 
         }
 
@@ -108,7 +109,7 @@ namespace MathGamesApp.Core.Services
         public IEnumerable<AdditionProblemViewModel> GenerateAdditionProblemsByLevel(int difficultyLevelId)
         {
             var random = new Random();
-            var problems = new List<AdditionProblemViewModel>();
+            //var problems = new List<AdditionProblemViewModel>();
 
             for (int i = 0; i < 10; i++)
             {
@@ -165,9 +166,10 @@ namespace MathGamesApp.Core.Services
                 };
 
                 problems.Add(problem);
+                
             }
-
             return problems;
+            
         }
 
 

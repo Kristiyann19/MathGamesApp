@@ -1,4 +1,5 @@
 using MathGamesApp.Core.Contracts;
+using MathGamesApp.Core.Models.Problem;
 using MathGamesApp.Core.Services;
 using MathGamesApp.Infrastructure.Data;
 using MathGamesApp.Infrastructure.Data.Entities;
@@ -29,7 +30,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IProblemService, ProblemService>();
-
+builder.Services.AddScoped<List<AdditionProblemViewModel>>();
 
 var app = builder.Build();
 
