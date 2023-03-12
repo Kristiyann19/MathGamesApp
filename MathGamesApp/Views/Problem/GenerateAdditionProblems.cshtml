@@ -2,26 +2,21 @@
 
 @model IEnumerable<AdditionProblemViewModel>
 
-<form asp-controller="Problem" asp-action="CheckAnswers" method="post">
-    <table>
-        <thead>
-            <tr>
-                <th>Description</th>
-                <th>Your Answer</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var problem in Model)
-            {
-                <tr>
-                    <td>@problem.Description</td>
-                    <td><input type="number" name="@($"problems.{problem.Description}.UserAnswer")" /></td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <button type="submit">Check Answers</button>
-</form>
+<h2>Generate Addition Problems</h2>
+
+@using (Html.BeginForm("CheckAnswers", "Problem", FormMethod.Post))
+{
+    @foreach (var problem in Model)
+    {
+        <div class="problem">
+            <p>@problem.Description</p>
+            <input type="hidden" name="Problems.Index" value="@problem.Id" />
+            <label>Answer:</label>
+            <input type="number" name="Problems[@problem.Id].UserAnswer" value="@problem.UserAnswer" />
+        </div>
+    }
+    <button type="submit">Submit Answers</button>
+}
 
 @*@model IEnumerable<AdditionProblemViewModel>
 

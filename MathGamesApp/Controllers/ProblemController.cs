@@ -26,26 +26,34 @@ namespace MathGamesApp.Controllers
             {
                 Id = p.Id,
                 Description = p.Description,
-                UserAnswer = p.UserAnswer
+                UserAnswer = p.UserAnswer,
+                Answer = p.Answer,
+                DifficultyLevelId = difficultyLevelId,
+                ProblemCategoryId = 1,
+                ProblemTypeId = 1,
+                IsCorrect = false,
                 // initialize answer to null as user has not submitted anything yet
             });
 
-            return View(additionProblemViewModels);
+            return View(problems);
         }
 
         [HttpPost]
-        public IActionResult CheckAnswers(List<AdditionProblemViewModel> problems)
+        public IActionResult CheckAnswers(IEnumerable<AdditionProblemViewModel> problems)
         {
-            var allCorrect = problemService.CheckAdditionProblemAnswers(problems);
+            bool allCorrect = problemService.CheckAdditionProblemAnswers(problems);
 
             if (allCorrect)
             {
-                return RedirectToAction("Index", "Home");
+                ViewData["Message"] = "Congratulations! All your answers are correct.";
             }
             else
             {
-                return RedirectToAction("GenerateAdditionProblems", new { difficultyLevelId = problems.First().DifficultyLevelId });
+
+                ViewData["Message"] = "Sorry, some of your answers are incorrect. Please try again.";
             }
+
+            return View("CheckAnswers");
         }
 
 

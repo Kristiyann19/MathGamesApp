@@ -6,6 +6,7 @@ using MathGamesApp.Infrastructure.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,13 +16,10 @@ namespace MathGamesApp.Core.Services
     public class ProblemService : IProblemService
     {
         private readonly ApplicationDbContext context;
-        private readonly List<AdditionProblemViewModel> problems;   
 
-        public ProblemService(ApplicationDbContext _context, List<AdditionProblemViewModel> _problems)
+        public ProblemService(ApplicationDbContext _context)
         {
             context = _context;
-            problems = _problems;
-
         }
 
         private readonly Random random = new Random();
@@ -108,14 +106,16 @@ namespace MathGamesApp.Core.Services
 
         public IEnumerable<AdditionProblemViewModel> GenerateAdditionProblemsByLevel(int difficultyLevelId)
         {
+           
             var random = new Random();
-            //var problems = new List<AdditionProblemViewModel>();
+            var problems = new List<AdditionProblemViewModel>();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 1; i++)
             {
                 int num1 = 0;
                 int num2 = 0;
-                int? answer;
+                int answer;
+                int id = 0;
 
                 if (difficultyLevelId == 1)
                 {
@@ -153,37 +153,47 @@ namespace MathGamesApp.Core.Services
                     num2 = random.Next(-1000, 1000);
                 }
 
+                id++;
                 answer = num1 + num2;
 
                 var problem = new AdditionProblemViewModel()
                 {
+                    Id = id,
                     Description = $"What is the sum between {num1} and {num2}",
                     DifficultyLevelId = difficultyLevelId,
                     Answer = answer,
                     UserAnswer = null, // initialize to null
-                    IsCorrect = false
-                    //Write category and type id 
+                    IsCorrect = false,
+                    ProblemTypeId = 1,
+                    ProblemCategoryId = 1,
+                    Instruction = "smth"
+                    
                 };
 
                 problems.Add(problem);
                 
             }
             return problems;
-            
         }
 
 
         public bool CheckAdditionProblemAnswers(IEnumerable<AdditionProblemViewModel> problems)
         {
+            if (problems == null)
+            {
+                throw new ArgumentNullException(nameof(problems));
+            }
+
             bool allCorrect = true;
 
             foreach (var problem in problems)
             {
-                // only check problems where user has provided an answer
-                if (problem.UserAnswer.HasValue)
+                problem.IsCorrect = problem.Answer == problem.UserAnswer;
+                problem.DifficultyLevelId = difficultyLevelId;
+
+                if (!problem.IsCorrect)
                 {
-                    problem.IsCorrect = problem.UserAnswer == problem.Answer;
-                    allCorrect &= problem.IsCorrect;
+                    allCorrect = false;
                 }
             }
 

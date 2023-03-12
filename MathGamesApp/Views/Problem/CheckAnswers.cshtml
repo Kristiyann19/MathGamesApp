@@ -1,25 +1,23 @@
 ﻿@using MathGamesApp.Core.Models.Problem
 @model IEnumerable<AdditionProblemViewModel>
 
-<h1>Results</h1>
-
-<table>
-    @foreach (var problem in Model)
-    {
-        <tr>
-            <td>@problem.Description</td>
-            <td>@(problem.IsCorrect ? "Correct" : "Incorrect")</td>
-            <td>@problem.UserAnswer</td>
-            <td>@problem.Answer</td>
-        </tr>
-    }
-</table>
+<h2>Check Addition Problem Answers</h2>
 
 @if (Model.All(p => p.IsCorrect))
 {
-    <p>Congratulations! You got all the answers correct.</p>
+    <p>Congratulations, you got all the answers correct!</p>
 }
 else
 {
-    <p>Some answers were incorrect. Please try again.</p>
+    <p>Oops, you got some answers wrong. Here are the correct answers:</p>
+    @foreach (var problem in Model)
+    {
+        <div class="problem @(problem.IsCorrect ? "correct" : "incorrect")">
+            <p>@problem.Description</p>
+            <label>Your Answer:</label>
+            <span>@problem.UserAnswer</span>
+            <label>Correct Answer:</label>
+            <span>@problem.Answer</span>
+        </div>
+    }
 }
