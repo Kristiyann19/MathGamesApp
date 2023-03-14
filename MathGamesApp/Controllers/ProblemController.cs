@@ -22,40 +22,38 @@ namespace MathGamesApp.Controllers
         {
             var problems = problemService.GenerateAdditionProblemsByLevel(difficultyLevelId);
 
-            var problemsWithAnswers = problems.Select(p => new AdditionProblemWithAnswerViewModel
+            var additionProblemViewModels = problems.Select(p => new AdditionProblemViewModel
             {
                 Id = p.Id,
                 Description = p.Description,
-                DifficultyLevelId = p.DifficultyLevelId,
+                UserAnswer = p.UserAnswer,
                 Answer = p.Answer,
-                UserAnswer = null,
+                DifficultyLevelId = difficultyLevelId,
+                ProblemCategoryId = 1,
+                ProblemTypeId = 1,
                 IsCorrect = false,
-                ProblemTypeId = p.ProblemTypeId,
-                ProblemCategoryId = p.ProblemCategoryId,
-                Instruction = p.Instruction
-            }).ToList();
+                // initialize answer to null as user has not submitted anything yet
+            });
 
-            return View(problemsWithAnswers);
+            return View(problems);
         }
 
         [HttpPost]
-        public IActionResult CheckAnswers(IEnumerable<AdditionProblemWithAnswerViewModel> problems)
+        public IActionResult CheckAnswers(IEnumerable<AdditionProblemViewModel> problems)
         {
-            foreach (var problem in problems)
-            {
-                problem.IsCorrect = problem.Answer == problem.UserAnswer;
-            }
+            bool allCorrect = problemService.CheckAdditionProblemAnswers(problems);
 
-            if (problems.All(p => p.IsCorrect))
+            if (allCorrect)
             {
                 ViewData["Message"] = "Congratulations! All your answers are correct.";
             }
             else
             {
+
                 ViewData["Message"] = "Sorry, some of your answers are incorrect. Please try again.";
             }
 
-            return View(problems);
+            return View("CheckAnswers");
         }
 
 
