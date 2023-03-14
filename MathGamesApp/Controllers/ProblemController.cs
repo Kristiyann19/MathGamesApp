@@ -22,38 +22,40 @@ namespace MathGamesApp.Controllers
         {
             var problems = problemService.GenerateAdditionProblemsByLevel(difficultyLevelId);
 
-            var additionProblemViewModels = problems.Select(p => new AdditionProblemViewModel
+            var problemsWithAnswers = problems.Select(p => new AdditionProblemWithAnswerViewModel
             {
                 Id = p.Id,
                 Description = p.Description,
-                UserAnswer = p.UserAnswer,
+                DifficultyLevelId = p.DifficultyLevelId,
                 Answer = p.Answer,
-                DifficultyLevelId = difficultyLevelId,
-                ProblemCategoryId = 1,
-                ProblemTypeId = 1,
+                UserAnswer = null,
                 IsCorrect = false,
-                // initialize answer to null as user has not submitted anything yet
-            });
+                ProblemTypeId = p.ProblemTypeId,
+                ProblemCategoryId = p.ProblemCategoryId,
+                Instruction = p.Instruction
+            }).ToList();
 
-            return View(problems);
+            return View(problemsWithAnswers);
         }
 
         [HttpPost]
-        public IActionResult CheckAnswers(IEnumerable<AdditionProblemViewModel> problems)
+        public IActionResult CheckAnswers(IEnumerable<AdditionProblemWithAnswerViewModel> problems)
         {
-            bool allCorrect = problemService.CheckAdditionProblemAnswers(problems);
+            foreach (var problem in problems)
+            {
+                problem.IsCorrect = problem.Answer == problem.UserAnswer;
+            }
 
-            if (allCorrect)
+            if (problems.All(p => p.IsCorrect))
             {
                 ViewData["Message"] = "Congratulations! All your answers are correct.";
             }
             else
             {
-
                 ViewData["Message"] = "Sorry, some of your answers are incorrect. Please try again.";
             }
 
-            return View("CheckAnswers");
+            return View(problems);
         }
 
 

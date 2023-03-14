@@ -12,12 +12,12 @@ else
     <p>Oops, you got some answers wrong. Here are the correct answers:</p>
     @foreach (var problem in Model)
     {
-        <div class="problem @(problem.IsCorrect ? "correct" : "incorrect")">
-            <p>@problem.Description</p>
-            <label>Your Answer:</label>
-            <span>@problem.UserAnswer</span>
-            <label>Correct Answer:</label>
-            <span>@problem.Answer</span>
-        </div>
+    <div class="problem @(problem.IsCorrect ? "correct" : "incorrect")">
+        <p>@problem.Description</p>
+        <label>Your Answer:</label>
+        <span>@problem.UserAnswer</span>
+        <label>Correct Answer:</label>
+        <span>@problem.Answer</span>
+    </div>
     }
 }

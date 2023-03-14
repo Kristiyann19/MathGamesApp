@@ -109,13 +109,14 @@ namespace MathGamesApp.Core.Services
            
             var random = new Random();
             var problems = new List<AdditionProblemViewModel>();
+            int id = 0;
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 3; i++)
             {
                 int num1 = 0;
                 int num2 = 0;
                 int answer;
-                int id = 0;
+                
 
                 if (difficultyLevelId == 1)
                 {
@@ -153,7 +154,7 @@ namespace MathGamesApp.Core.Services
                     num2 = random.Next(-1000, 1000);
                 }
 
-                id++;
+                
                 answer = num1 + num2;
 
                 var problem = new AdditionProblemViewModel()
@@ -162,16 +163,16 @@ namespace MathGamesApp.Core.Services
                     Description = $"What is the sum between {num1} and {num2}",
                     DifficultyLevelId = difficultyLevelId,
                     Answer = answer,
-                    UserAnswer = null, // initialize to null
+                    UserAnswer = 0, // initialize to null
                     IsCorrect = false,
                     ProblemTypeId = 1,
                     ProblemCategoryId = 1,
                     Instruction = "smth"
                     
-                };
+                };  
 
                 problems.Add(problem);
-                
+                id++;
             }
             return problems;
         }
@@ -189,7 +190,7 @@ namespace MathGamesApp.Core.Services
             foreach (var problem in problems)
             {
                 problem.IsCorrect = problem.Answer == problem.UserAnswer;
-                problem.DifficultyLevelId = difficultyLevelId;
+                
 
                 if (!problem.IsCorrect)
                 {
@@ -200,13 +201,5 @@ namespace MathGamesApp.Core.Services
             return allCorrect;
         }
 
-        //public List<AdditionProblemViewModel> CheckAnswers(List<AdditionProblemViewModel> problems)
-        //{
-        //    foreach (var problem in problems)
-        //    {
-        //        problem.IsCorrect = problem.UserAnswer == problem.Answer;
-        //    }
-        //    return problems;
-        //}
     }
 }

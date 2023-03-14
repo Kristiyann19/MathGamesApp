@@ -11,11 +11,11 @@ namespace MathGamesApp.Core.Models.Problem
        
         public int Id { get; set; }
 
-        public int? Answer { get; set; }
+        public int Answer { get; set; }
 
         public bool IsCorrect { get; set; }
 
-        public int? UserAnswer { get; set; }
+        public int? UserAnswer { get; set; }  = null!;
 
         public string Description { get; set; } = null!;
 

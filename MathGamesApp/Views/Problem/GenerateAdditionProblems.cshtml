@@ -6,11 +6,12 @@
 
 @using (Html.BeginForm("CheckAnswers", "Problem", FormMethod.Post))
 {
-    @foreach (var problem in Model)
+    @for (int i = 0; i < Model.Count(); i++)
     {
+        var problem = Model.ElementAt(i);
         <div class="problem">
             <p>@problem.Description</p>
-            <input type="hidden" name="Problems.Index" value="@problem.Id" />
+            <input type="hidden" name="Problems.Index" value="@i" />
             <label>Answer:</label>
             <input type="number" name="Problems[@problem.Id].UserAnswer" value="@problem.UserAnswer" />
         </div>
