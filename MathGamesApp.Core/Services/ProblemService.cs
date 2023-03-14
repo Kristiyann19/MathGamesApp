@@ -177,6 +177,11 @@ namespace MathGamesApp.Core.Services
             return problems;
         }
 
+        public IEnumerable<AdditionProblemViewModel> GetAdditionProblemsByLevel(IEnumerable<AdditionProblemViewModel> problems)
+        {
+            
+            return problems.ToList();
+        }
 
         public bool CheckAdditionProblemAnswers(IEnumerable<AdditionProblemViewModel> problems)
         {

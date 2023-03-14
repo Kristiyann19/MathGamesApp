@@ -1,23 +1,23 @@
 ﻿@using MathGamesApp.Core.Models.Problem
-
 @model IEnumerable<AdditionProblemViewModel>
 
 <h2>Generate Addition Problems</h2>
 
 @using (Html.BeginForm("CheckAnswers", "Problem", FormMethod.Post))
 {
-    @for (int i = 0; i < Model.Count(); i++)
+    @foreach (var problem in Model)
     {
-        var problem = Model.ElementAt(i);
         <div class="problem">
             <p>@problem.Description</p>
-            <input type="hidden" name="Problems.Index" value="@i" />
+            <input type="hidden" name="Problems.Index" value="@problem.Id" />
             <label>Answer:</label>
             <input type="number" name="Problems[@problem.Id].UserAnswer" value="@problem.UserAnswer" />
         </div>
+        
     }
     <button type="submit">Submit Answers</button>
 }
+
 
 @*@model IEnumerable<AdditionProblemViewModel>
 

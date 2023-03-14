@@ -25,5 +25,7 @@ namespace MathGamesApp.Core.Contracts
         IEnumerable<AdditionProblemViewModel> GenerateAdditionProblemsByLevel(int difficultyLevelId);
 
         bool CheckAdditionProblemAnswers(IEnumerable<AdditionProblemViewModel> problems);
+
+        IEnumerable<AdditionProblemViewModel> GetAdditionProblemsByLevel(IEnumerable<AdditionProblemViewModel> problems);
     }
 }

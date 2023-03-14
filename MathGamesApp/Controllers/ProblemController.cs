@@ -18,6 +18,13 @@ namespace MathGamesApp.Controllers
         }
 
 
+        public IActionResult GetProblems(IEnumerable<AdditionProblemViewModel> problems)
+        {
+            var problemList = problemService.GetAdditionProblemsByLevel(problems);
+
+            return View(problemList);
+        }
+
         public IActionResult GenerateAdditionProblems(int difficultyLevelId)
         {
             var problems = problemService.GenerateAdditionProblemsByLevel(difficultyLevelId);
@@ -35,13 +42,15 @@ namespace MathGamesApp.Controllers
                 // initialize answer to null as user has not submitted anything yet
             });
 
-            return View(problems);
+            return View(additionProblemViewModels);
         }
 
         [HttpPost]
+        
         public IActionResult CheckAnswers(IEnumerable<AdditionProblemViewModel> problems)
         {
-            bool allCorrect = problemService.CheckAdditionProblemAnswers(problems);
+            var problemList = problemService.GetAdditionProblemsByLevel(problems);
+            bool allCorrect = problemService.CheckAdditionProblemAnswers(problemList);
 
             if (allCorrect)
             {
@@ -53,7 +62,7 @@ namespace MathGamesApp.Controllers
                 ViewData["Message"] = "Sorry, some of your answers are incorrect. Please try again.";
             }
 
-            return View("CheckAnswers");
+            return View("CheckAnswers", problemList);
         }
 
 
