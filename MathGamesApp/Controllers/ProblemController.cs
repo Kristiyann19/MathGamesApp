@@ -49,8 +49,8 @@ namespace MathGamesApp.Controllers
         
         public IActionResult CheckAnswers(IEnumerable<AdditionProblemViewModel> problems)
         {
-            var problemList = problemService.GetAdditionProblemsByLevel(problems);
-            bool allCorrect = problemService.CheckAdditionProblemAnswers(problemList);
+            
+            bool allCorrect = problemService.CheckAdditionProblemAnswers(problems);
 
             if (allCorrect)
             {
@@ -62,7 +62,7 @@ namespace MathGamesApp.Controllers
                 ViewData["Message"] = "Sorry, some of your answers are incorrect. Please try again.";
             }
 
-            return View("CheckAnswers", problemList);
+            return View("CheckAnswers", problems);
         }
 
 
