@@ -18,16 +18,9 @@ namespace MathGamesApp.Controllers
         }
 
 
-        public IActionResult GetProblems(IEnumerable<AdditionProblemViewModel> problems)
+        public IActionResult AdditionProblems(int difficultyLevelId, int problemTypeId)
         {
-            var problemList = problemService.GetAdditionProblemsByLevel(problems);
-
-            return View(problemList);
-        }
-
-        public IActionResult GenerateAdditionProblems(int difficultyLevelId)
-        {
-            var problems = problemService.GenerateAdditionProblemsByLevel(difficultyLevelId);
+            var problems = problemService.GenerateAdditionProblemsByLevel(difficultyLevelId, problemTypeId);
 
             var additionProblemViewModels = problems.Select(p => new AdditionProblemViewModel
             {
@@ -37,7 +30,7 @@ namespace MathGamesApp.Controllers
                 Answer = p.Answer,
                 DifficultyLevelId = difficultyLevelId,
                 ProblemCategoryId = 1,
-                ProblemTypeId = 1,
+                ProblemTypeId = problemTypeId,
                 IsCorrect = false,
                 // initialize answer to null as user has not submitted anything yet
             });
@@ -45,9 +38,29 @@ namespace MathGamesApp.Controllers
             return View(additionProblemViewModels);
         }
 
+        public IActionResult SubtractionProblems(int difficultyLevelId, int problemTypeId)
+        {
+            var subProblems = problemService.GenerateSubtractionProblemsByLevel(difficultyLevelId, problemTypeId);
+
+            var subtractionProblemViewModels = subProblems.Select(p => new SubtractionProblemViewModel
+            {
+                Id = p.Id,
+                Description = p.Description,
+                UserAnswer = p.UserAnswer,
+                Answer = p.Answer,
+                DifficultyLevelId = difficultyLevelId,
+                ProblemCategoryId = 1,
+                ProblemTypeId = 2, // set to 2 to indicate subtraction problems
+                IsCorrect = false,
+                // initialize answer to null as user has not submitted anything yet
+            });
+
+            return View(subtractionProblemViewModels);
+        }
+
         [HttpPost]
         
-        public IActionResult CheckAnswers(IEnumerable<AdditionProblemViewModel> problems)
+        public IActionResult CheckAnswersAddition(IEnumerable<AdditionProblemViewModel> problems)
         {
             
             bool allCorrect = problemService.CheckAdditionProblemAnswers(problems);
@@ -62,7 +75,27 @@ namespace MathGamesApp.Controllers
                 ViewData["Message"] = "Sorry, some of your answers are incorrect. Please try again.";
             }
 
-            return View("CheckAnswers", problems);
+            return View("CheckAnswersAddition", problems);
+        }
+
+        [HttpPost]
+
+        public IActionResult CheckAnswersSubtraction(IEnumerable<SubtractionProblemViewModel> subProblems)
+        {
+
+            bool allCorrect = problemService.CheckSubtractionProblemAnswers(subProblems);
+
+            if (allCorrect)
+            {
+                ViewData["Message"] = "Congratulations! All your answers are correct.";
+            }
+            else
+            {
+
+                ViewData["Message"] = "Sorry, some of your answers are incorrect. Please try again.";
+            }
+
+            return View("CheckAnswersSubtraction", subProblems);
         }
 
 
@@ -91,11 +124,32 @@ namespace MathGamesApp.Controllers
             return View(types);
         }
 
-        public async Task<IActionResult> GetDifficultyLevels()
+        public IActionResult SubtractionDifficultyLevels()
         {
-            var levels = await problemService.GetAllDifficultyLevelsAsync();
+            var difficultyLevels = problemService.GetDifficultyLevelsByProblemType(2);
 
-            return View(levels);
+            var difficultyLevelViewModels = difficultyLevels.Select(d => new DifficultyLevelsViewModel
+            {
+                Id = d.Id,
+                Name = d.Name,
+                ProblemTypeId = 2
+            });
+
+            return View(difficultyLevelViewModels);
+        }
+
+        public IActionResult AdditionDifficultyLevels()
+        {
+            var difficultyLevels = problemService.GetDifficultyLevelsByProblemType(1);
+
+            var difficultyLevelViewModels = difficultyLevels.Select(d => new DifficultyLevelsViewModel
+            {
+                Id = d.Id,
+                Name = d.Name,
+                ProblemTypeId = 1
+            });
+
+            return View(difficultyLevelViewModels);
         }
 
     }

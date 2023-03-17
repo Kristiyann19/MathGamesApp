@@ -35,10 +35,13 @@ namespace MathGamesApp.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
-            //        builder.Entity<Problem>()
-            //.HasOne(p => p.ProblemCategory)
-            //.WithMany()
-            //.HasForeignKey(p => p.ProblemCategoryId);
+            builder
+                .Entity<DifficultyLevel>()
+                .HasOne(d => d.ProblemType)
+                .WithMany(p => p.DifficultyLevels)
+                .HasForeignKey(d => d.ProblemTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             builder
                 .Entity<ProblemType>()

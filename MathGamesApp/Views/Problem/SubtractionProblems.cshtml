@@ -1,9 +1,9 @@
 ﻿@using MathGamesApp.Core.Models.Problem
-@model IEnumerable<AdditionProblemViewModel>
+@model IEnumerable<SubtractionProblemViewModel>
 
 
 
-<form method="post" action="@Url.Action("CheckAnswers")">
+<form method="post" action="@Url.Action("CheckAnswersSubtraction")">
   <table>
     <thead>
       <tr>
@@ -38,6 +38,5 @@
   </table>
   <button type="submit" class="btn btn-primary mt-3">Check Answers</button>
 </form>
-
 
 

@@ -1,0 +1,68 @@
+﻿@using MathGamesApp.Core.Models.Problem
+@model IEnumerable<SubtractionProblemViewModel>
+
+
+<h2>Check Addition Problem Answers</h2>
+
+@if (Model.All(p => p.IsCorrect))
+{
+    <p class="success">Congratulations, you got all the answers correct!</p>
+}
+else
+{
+    <p class="error">Oops, you got some answers wrong. Here are the correct answers:</p>
+    @foreach (var problem in Model)
+    {
+        <div class="problem @(problem.IsCorrect ? "correct" : "incorrect")">
+            <p class="problem-description">@problem.Description</p>
+            <div class="answer-section">
+                <label>Your Answer:</label>
+                <span>@problem.UserAnswer</span>
+            </div>
+            <div class="answer-section">
+                <label>Correct Answer:</label>
+                <span>@problem.Answer</span>
+            </div>
+            @Html.HiddenFor(model => problem.Id)
+            @Html.HiddenFor(model => problem.DifficultyLevelId)
+            @Html.HiddenFor(model => problem.ProblemCategoryId)
+            @Html.HiddenFor(model => problem.ProblemTypeId)
+        </div>
+    }
+}
+
+<style>
+    .success {
+        color: green;
+        font-weight: bold;
+    }
+    
+    .error {
+        color: red;
+        font-weight: bold;
+    }
+    
+    .problem {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid black;
+    }
+    
+    .problem .problem-description {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    .problem.correct {
+        background-color: #cfc;
+    }
+    
+    .problem.incorrect {
+        background-color: #fcc;
+    }
+    
+    .answer-section {
+        display: inline-block;
+        margin-right: 10px;
+    }
+</style>

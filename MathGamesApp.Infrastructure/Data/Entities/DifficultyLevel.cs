@@ -16,6 +16,12 @@ namespace MathGamesApp.Infrastructure.Data.Entities
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        public int ProblemTypeId { get; set; } 
+
+        [ForeignKey(nameof(ProblemTypeId))]
+        public ProblemType ProblemType { get; set; }
+
         public List<Problem> Problem { get; set; } = new List<Problem>();
     }
 }

@@ -1,0 +1,43 @@
+﻿@using MathGamesApp.Core.Models.Problem
+@model IEnumerable<AdditionProblemViewModel>
+
+
+
+<form method="post" action="@Url.Action("CheckAnswersAddition")">
+  <table>
+    <thead>
+      <tr>
+        <th>Problem</th>
+        <th>Your Answer</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var problem in Model)
+      {
+        <tr>
+          <td>@problem.Description</td>
+          <td>
+            <div class="input-group">
+              <input type="hidden" name="problems[@problem.Id].Id" value="@problem.Id" />
+              <input type="hidden" name="problems[@problem.Id].DifficultyLevelId" value="@problem.DifficultyLevelId" />
+              <input type="hidden" name="problems[@problem.Id].ProblemCategoryId" value="@problem.ProblemCategoryId" />
+              <input type="hidden" name="problems[@problem.Id].ProblemTypeId" value="@problem.ProblemTypeId" />
+              <input type="number" class="form-control" name="problems[@problem.Id].UserAnswer" value="@problem.UserAnswer" />
+              <input type="hidden" name="problems[@problem.Id].Answer" value="@problem.Answer" />
+              <input type="hidden" name="problems[@problem.Id].Description" value="@problem.Description" />
+              <input type="hidden" name="problems[@problem.Id].IsCorrect" value="@problem.IsCorrect" />
+              <div class="input-group-append">
+              </div>
+            </div>
+          </td>
+          <td></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  <button type="submit" class="btn btn-primary mt-3">Check Answers</button>
+</form>
+
+
+

@@ -23,39 +23,87 @@ namespace MathGamesApp.Infrastructure.Data.Configurations
                 new DifficultyLevel()
                 {
                     Id = 1,
-                    Name = "1st Grade"
+                    Name = "1st Grade",
+                    ProblemTypeId = 1,
                 },
                 new DifficultyLevel()
                 {
                     Id = 2,
-                    Name = "2nd Grade"
+                    Name = "2nd Grade",
+                    ProblemTypeId = 1,
                 },
                 new DifficultyLevel()
                 {
                     Id = 3,
-                    Name = "3th Grade"
+                    Name = "3th Grade",
+                    ProblemTypeId = 1,
                 },
                 new DifficultyLevel()
                 {
                     Id = 4,
-                    Name = "4th Grade"
+                    Name = "4th Grade",
+                    ProblemTypeId = 1,
                 },
                 new DifficultyLevel()
                 {
                     Id = 5,
-                    Name = "5th Grade"
+                    Name = "5th Grade",
+                    ProblemTypeId = 1,
                 },
                 new DifficultyLevel()
                 {
                     Id = 6,
-                    Name = "6th Grade"
+                    Name = "6th Grade",
+                    ProblemTypeId = 1,
                 },
                 new DifficultyLevel()
                 {
                     Id = 7,
-                    Name = "7th Grade"
+                    Name = "7th Grade",
+                    ProblemTypeId = 1,
                 },
-
+                new DifficultyLevel()
+                {
+                    Id = 8,
+                    Name = "1st Grade",
+                    ProblemTypeId = 2,
+                },
+                new DifficultyLevel()
+                {
+                    Id = 9,
+                    Name = "2nd Grade",
+                    ProblemTypeId = 2,
+                },
+                new DifficultyLevel()
+                {
+                    Id = 10,
+                    Name = "3th Grade",
+                    ProblemTypeId = 2,
+                },
+                new DifficultyLevel()
+                {
+                    Id = 11,
+                    Name = "4th Grade",
+                    ProblemTypeId = 2,
+                },
+                new DifficultyLevel()
+                {
+                    Id = 12,
+                    Name = "5th Grade",
+                    ProblemTypeId = 2,
+                },
+                new DifficultyLevel()
+                {
+                    Id = 13,
+                    Name = "6th Grade",
+                    ProblemTypeId = 2,
+                },
+                new DifficultyLevel()
+                {
+                    Id = 14,
+                    Name = "7th Grade",
+                    ProblemTypeId = 2,
+                },
             };
 
             return difficultyLevels;

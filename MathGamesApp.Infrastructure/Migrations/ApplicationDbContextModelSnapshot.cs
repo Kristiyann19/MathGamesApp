@@ -34,7 +34,12 @@ namespace MathGamesApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProblemTypeId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProblemTypeId");
 
                     b.ToTable("DifficultyLevels");
 
@@ -42,37 +47,86 @@ namespace MathGamesApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "1st Grade"
+                            Name = "1st Grade",
+                            ProblemTypeId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Name = "2nd Grade"
+                            Name = "2nd Grade",
+                            ProblemTypeId = 1
                         },
                         new
                         {
                             Id = 3,
-                            Name = "3th Grade"
+                            Name = "3th Grade",
+                            ProblemTypeId = 1
                         },
                         new
                         {
                             Id = 4,
-                            Name = "4th Grade"
+                            Name = "4th Grade",
+                            ProblemTypeId = 1
                         },
                         new
                         {
                             Id = 5,
-                            Name = "5th Grade"
+                            Name = "5th Grade",
+                            ProblemTypeId = 1
                         },
                         new
                         {
                             Id = 6,
-                            Name = "6th Grade"
+                            Name = "6th Grade",
+                            ProblemTypeId = 1
                         },
                         new
                         {
                             Id = 7,
-                            Name = "7th Grade"
+                            Name = "7th Grade",
+                            ProblemTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "1st Grade",
+                            ProblemTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "2nd Grade",
+                            ProblemTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "3th Grade",
+                            ProblemTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "4th Grade",
+                            ProblemTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "5th Grade",
+                            ProblemTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "6th Grade",
+                            ProblemTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "7th Grade",
+                            ProblemTypeId = 2
                         });
                 });
 
@@ -476,10 +530,21 @@ namespace MathGamesApp.Infrastructure.Migrations
                     b.Property<int>("SecondDigit")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserAnswer")
+                    b.Property<int?>("UserAnswer")
                         .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("AdditionProblem");
+                });
+
+            modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.DifficultyLevel", b =>
+                {
+                    b.HasOne("MathGamesApp.Infrastructure.Data.Entities.ProblemType", "ProblemType")
+                        .WithMany("DifficultyLevels")
+                        .HasForeignKey("ProblemTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ProblemType");
                 });
 
             modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.Problem", b =>
@@ -497,7 +562,7 @@ namespace MathGamesApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("MathGamesApp.Infrastructure.Data.Entities.ProblemType", "ProblemType")
-                        .WithMany("Games")
+                        .WithMany()
                         .HasForeignKey("ProblemTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -589,7 +654,7 @@ namespace MathGamesApp.Infrastructure.Migrations
 
             modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.ProblemType", b =>
                 {
-                    b.Navigation("Games");
+                    b.Navigation("DifficultyLevels");
                 });
 #pragma warning restore 612, 618
         }

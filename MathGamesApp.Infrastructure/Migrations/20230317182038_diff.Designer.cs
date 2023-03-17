@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MathGamesApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230305213100_correctAnswer")]
-    partial class correctAnswer
+    [Migration("20230317182038_diff")]
+    partial class diff
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,6 +24,114 @@ namespace MathGamesApp.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.DifficultyLevel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProblemTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProblemTypeId");
+
+                    b.ToTable("DifficultyLevels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "1st Grade",
+                            ProblemTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "2nd Grade",
+                            ProblemTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "3th Grade",
+                            ProblemTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "4th Grade",
+                            ProblemTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "5th Grade",
+                            ProblemTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "6th Grade",
+                            ProblemTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "7th Grade",
+                            ProblemTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "1st Grade",
+                            ProblemTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "2nd Grade",
+                            ProblemTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "3th Grade",
+                            ProblemTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "4th Grade",
+                            ProblemTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "5th Grade",
+                            ProblemTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "6th Grade",
+                            ProblemTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "7th Grade",
+                            ProblemTypeId = 2
+                        });
+                });
+
             modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.Problem", b =>
                 {
                     b.Property<int>("Id")
@@ -32,22 +140,18 @@ namespace MathGamesApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<double>("AverageRating")
-                        .HasColumnType("float");
-
-                    b.Property<string>("CorrectAnswer")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Answer")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("DifficultyLevel")
+                    b.Property<int>("DifficultyLevelId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -55,9 +159,6 @@ namespace MathGamesApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<int>("ProblemCategoryId")
                         .HasColumnType("int");
@@ -67,11 +168,15 @@ namespace MathGamesApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DifficultyLevelId");
+
                     b.HasIndex("ProblemCategoryId");
 
                     b.HasIndex("ProblemTypeId");
 
                     b.ToTable("Problems");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Problem");
                 });
 
             modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.ProblemCategory", b =>
@@ -414,8 +519,44 @@ namespace MathGamesApp.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.AdditionProblem", b =>
+                {
+                    b.HasBaseType("MathGamesApp.Infrastructure.Data.Entities.Problem");
+
+                    b.Property<int>("FirstDigit")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SecondDigit")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserAnswer")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("AdditionProblem");
+                });
+
+            modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.DifficultyLevel", b =>
+                {
+                    b.HasOne("MathGamesApp.Infrastructure.Data.Entities.ProblemType", "ProblemType")
+                        .WithMany("DifficultyLevels")
+                        .HasForeignKey("ProblemTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ProblemType");
+                });
+
             modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.Problem", b =>
                 {
+                    b.HasOne("MathGamesApp.Infrastructure.Data.Entities.DifficultyLevel", "DifficultyLevel")
+                        .WithMany("Problem")
+                        .HasForeignKey("DifficultyLevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MathGamesApp.Infrastructure.Data.Entities.ProblemCategory", "ProblemCategory")
                         .WithMany()
                         .HasForeignKey("ProblemCategoryId")
@@ -423,10 +564,12 @@ namespace MathGamesApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("MathGamesApp.Infrastructure.Data.Entities.ProblemType", "ProblemType")
-                        .WithMany("Games")
+                        .WithMany()
                         .HasForeignKey("ProblemTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("DifficultyLevel");
 
                     b.Navigation("ProblemCategory");
 
@@ -506,9 +649,14 @@ namespace MathGamesApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.DifficultyLevel", b =>
+                {
+                    b.Navigation("Problem");
+                });
+
             modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.ProblemType", b =>
                 {
-                    b.Navigation("Games");
+                    b.Navigation("DifficultyLevels");
                 });
 #pragma warning restore 612, 618
         }

@@ -20,12 +20,16 @@ namespace MathGamesApp.Core.Contracts
 
         Task<IEnumerable<ProblemTypeViewModel>> GetAllTypesByCategoryAsync(int categoryId);
 
-        Task<IEnumerable<DifficultyLevelsViewModel>> GetAllDifficultyLevelsAsync();
+        Task<IEnumerable<DifficultyLevelsViewModel>> GetAllDifficultyLevelsAsync(int problemTypeId);
 
-        IEnumerable<AdditionProblemViewModel> GenerateAdditionProblemsByLevel(int difficultyLevelId);
+        IEnumerable<AdditionProblemViewModel> GenerateAdditionProblemsByLevel(int difficultyLevelId, int problemTypeId);
 
+        IEnumerable<SubtractionProblemViewModel> GenerateSubtractionProblemsByLevel(int difficultyLevelId, int problemTypeId);
+        bool CheckSubtractionProblemAnswers(IEnumerable<SubtractionProblemViewModel> subProblems);
         bool CheckAdditionProblemAnswers(IEnumerable<AdditionProblemViewModel> problems);
+        IEnumerable<DifficultyLevel> GetDifficultyLevelsByProblemType(int problemTypeId);
 
-        IEnumerable<AdditionProblemViewModel> GetAdditionProblemsByLevel(IEnumerable<AdditionProblemViewModel> problems);
+
+
     }
-}
+}   

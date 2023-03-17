@@ -4,7 +4,7 @@
 
 namespace MathGamesApp.Infrastructure.Migrations
 {
-    public partial class _4 : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,11 +31,65 @@ namespace MathGamesApp.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "ProblemTypes",
                 columns: new[] { "Id", "ImageUrl", "Instruction", "IsActive", "Name", "ProblemCategoryId" },
-                values: new object[] { 2, "https://www.theschoolrun.com/sites/theschoolrun.com/files/article_images/subtraction.png", "Take away one number from another", false, "Subtraction", 2 });
+                values: new object[] { 2, "https://www.theschoolrun.com/sites/theschoolrun.com/files/article_images/subtraction.png", "Take away one number from another", false, "Subtraction", 1 });
+
+            migrationBuilder.InsertData(
+                table: "DifficultyLevels",
+                columns: new[] { "Id", "Name", "ProblemTypeId" },
+                values: new object[,]
+                {
+                    { 1, "1st Grade", 1 },
+                    { 2, "2nd Grade", 1 },
+                    { 3, "3th Grade", 1 },
+                    { 4, "4th Grade", 1 },
+                    { 5, "5th Grade", 1 },
+                    { 6, "6th Grade", 1 },
+                    { 7, "7th Grade", 1 }
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DeleteData(
+                table: "DifficultyLevels",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "DifficultyLevels",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "DifficultyLevels",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "DifficultyLevels",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "DifficultyLevels",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "DifficultyLevels",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "DifficultyLevels",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "ProblemCategories",
+                keyColumn: "Id",
+                keyValue: 2);
+
             migrationBuilder.DeleteData(
                 table: "ProblemCategories",
                 keyColumn: "Id",
@@ -44,22 +98,17 @@ namespace MathGamesApp.Infrastructure.Migrations
             migrationBuilder.DeleteData(
                 table: "ProblemTypes",
                 keyColumn: "Id",
-                keyValue: 1);
+                keyValue: 2);
 
             migrationBuilder.DeleteData(
                 table: "ProblemTypes",
                 keyColumn: "Id",
-                keyValue: 2);
-
-            migrationBuilder.DeleteData(
-                table: "ProblemCategories",
-                keyColumn: "Id",
                 keyValue: 1);
 
             migrationBuilder.DeleteData(
                 table: "ProblemCategories",
                 keyColumn: "Id",
-                keyValue: 2);
+                keyValue: 1);
         }
     }
 }

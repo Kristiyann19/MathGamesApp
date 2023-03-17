@@ -33,8 +33,7 @@ namespace MathGamesApp.Infrastructure.Data.Entities
         [ForeignKey(nameof(ProblemCategoryId))]
         public ProblemCategory ProblemCategory { get; set; } = null!;
 
-        [Required]
-        public List<Problem> Games { get; set; } = new List<Problem>();
+        public List<DifficultyLevel> DifficultyLevels { get; set; } = new List<DifficultyLevel>();
 
     }
 }

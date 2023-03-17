@@ -1,0 +1,12 @@
+﻿@using MathGamesApp.Core.Models.Problem
+
+@model IEnumerable<DifficultyLevelsViewModel>
+
+<h1>Choose a difficulty level for subtraction problems</h1>
+
+@foreach(var level in Model)
+{
+    <a asp-controller="Problem" asp-action="SubtractionProblems" asp-route-difficultyLevelId="@level.Id">
+        <input type="submit" value="@level.Name" />
+    </a>
+}

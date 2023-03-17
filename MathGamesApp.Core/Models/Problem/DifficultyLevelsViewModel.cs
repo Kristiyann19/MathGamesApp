@@ -10,5 +10,7 @@ namespace MathGamesApp.Core.Models.Problem
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int ProblemTypeId { get; set; }
+
     }
 }

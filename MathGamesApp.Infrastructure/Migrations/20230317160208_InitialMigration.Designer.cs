@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MathGamesApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230302201944_sdsds")]
-    partial class sdsds
+    [Migration("20230317160208_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,6 +24,28 @@ namespace MathGamesApp.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.DifficultyLevel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProblemTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProblemTypeId");
+
+                    b.ToTable("DifficultyLevels");
+                });
+
             modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.Problem", b =>
                 {
                     b.Property<int>("Id")
@@ -32,18 +54,18 @@ namespace MathGamesApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<double>("AverageRating")
-                        .HasColumnType("float");
+                    b.Property<int>("Answer")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("DifficultyLevel")
+                    b.Property<int>("DifficultyLevelId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -51,9 +73,6 @@ namespace MathGamesApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<int>("ProblemCategoryId")
                         .HasColumnType("int");
@@ -63,25 +82,15 @@ namespace MathGamesApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DifficultyLevelId");
+
                     b.HasIndex("ProblemCategoryId");
 
                     b.HasIndex("ProblemTypeId");
 
                     b.ToTable("Problems");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AverageRating = 5.0,
-                            Description = "s",
-                            DifficultyLevel = 1,
-                            ImageUrl = "https://www.theschoolrun.com/sites/theschoolrun.com/files/article_images/addition.jpg",
-                            Instruction = "test",
-                            IsActive = true,
-                            ProblemCategoryId = 1,
-                            ProblemTypeId = 1
-                        });
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Problem");
                 });
 
             modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.ProblemCategory", b =>
@@ -109,29 +118,6 @@ namespace MathGamesApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProblemCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Traditional operations on numbers - addition, subtraction, multiplication, division, exponentiation",
-                            ImageUrl = "https://media.proprofs.com/images/QM/user_images/2169923/1514977691.jpg",
-                            Name = "Arithmetic"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Algebra deals with the manipulation of variables and the rules for manipulating these variables in formulas",
-                            ImageUrl = "https://st3.depositphotos.com/3591429/13656/i/450/depositphotos_136562916-stock-photo-creative-website-banner.jpg",
-                            Name = "Algebra"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Geometry is concerned with the shapes of individual objects or shapes and their properties",
-                            ImageUrl = "https://www.gyanipandit.com/en/wp-content/uploads/2021/06/Geometry-2cde81a7.jpg",
-                            Name = "Geometry"
-                        });
                 });
 
             modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.ProblemType", b =>
@@ -167,26 +153,6 @@ namespace MathGamesApp.Infrastructure.Migrations
                     b.HasIndex("ProblemCategoryId");
 
                     b.ToTable("ProblemTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ImageUrl = "https://www.theschoolrun.com/sites/theschoolrun.com/files/article_images/addition.jpg",
-                            Instruction = "Add numbers together",
-                            IsActive = false,
-                            Name = "Addition",
-                            ProblemCategoryId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ImageUrl = "https://www.theschoolrun.com/sites/theschoolrun.com/files/article_images/subtraction.png",
-                            Instruction = "Take away one number from another",
-                            IsActive = false,
-                            Name = "Subtraction",
-                            ProblemCategoryId = 1
-                        });
                 });
 
             modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.User", b =>
@@ -424,8 +390,44 @@ namespace MathGamesApp.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.AdditionProblem", b =>
+                {
+                    b.HasBaseType("MathGamesApp.Infrastructure.Data.Entities.Problem");
+
+                    b.Property<int>("FirstDigit")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SecondDigit")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserAnswer")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("AdditionProblem");
+                });
+
+            modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.DifficultyLevel", b =>
+                {
+                    b.HasOne("MathGamesApp.Infrastructure.Data.Entities.ProblemType", "ProblemType")
+                        .WithMany("DifficultyLevels")
+                        .HasForeignKey("ProblemTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ProblemType");
+                });
+
             modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.Problem", b =>
                 {
+                    b.HasOne("MathGamesApp.Infrastructure.Data.Entities.DifficultyLevel", "DifficultyLevel")
+                        .WithMany("Problem")
+                        .HasForeignKey("DifficultyLevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MathGamesApp.Infrastructure.Data.Entities.ProblemCategory", "ProblemCategory")
                         .WithMany()
                         .HasForeignKey("ProblemCategoryId")
@@ -433,10 +435,12 @@ namespace MathGamesApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("MathGamesApp.Infrastructure.Data.Entities.ProblemType", "ProblemType")
-                        .WithMany("Games")
+                        .WithMany()
                         .HasForeignKey("ProblemTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("DifficultyLevel");
 
                     b.Navigation("ProblemCategory");
 
@@ -516,9 +520,14 @@ namespace MathGamesApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.DifficultyLevel", b =>
+                {
+                    b.Navigation("Problem");
+                });
+
             modelBuilder.Entity("MathGamesApp.Infrastructure.Data.Entities.ProblemType", b =>
                 {
-                    b.Navigation("Games");
+                    b.Navigation("DifficultyLevels");
                 });
 #pragma warning restore 612, 618
         }

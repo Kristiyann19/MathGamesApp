@@ -91,7 +91,7 @@ namespace MathGamesApp.Core.Services
                .FirstAsync();
         }
 
-        public async Task<IEnumerable<DifficultyLevelsViewModel>> GetAllDifficultyLevelsAsync()
+        public async Task<IEnumerable<DifficultyLevelsViewModel>> GetAllDifficultyLevelsAsync(int problemTypeId)
         {
             var entities = await context.DifficultyLevels
                 .ToListAsync();
@@ -100,18 +100,101 @@ namespace MathGamesApp.Core.Services
                 .Select(e => new DifficultyLevelsViewModel
                 {
                     Id = e.Id,
-                    Name = e.Name
+                    Name = e.Name,
+                    ProblemTypeId = problemTypeId
                 });
         }
 
-        public IEnumerable<AdditionProblemViewModel> GenerateAdditionProblemsByLevel(int difficultyLevelId)
+        
+
+        public IEnumerable<DifficultyLevel> GetDifficultyLevelsByProblemType(int problemTypeId)
         {
-           
+            return context.DifficultyLevels
+                .Where(dl => dl.ProblemTypeId == problemTypeId)
+                .ToList();
+        }
+
+        public IEnumerable<SubtractionProblemViewModel> GenerateSubtractionProblemsByLevel(int difficultyLevelId, int problemTypeId)
+        {
+            var random = new Random();
+            var subProblems = new List<SubtractionProblemViewModel>();
+            int id = 0;
+
+            for (int i = 0; i < 10; i++)
+            {
+                int num1 = 0;
+                int num2 = 0;
+                int answer;
+
+
+                if (difficultyLevelId == 8)
+                {
+                    num1 = random.Next(1, 10);
+                    num2 = random.Next(1, 10);
+                }
+                else if (difficultyLevelId == 9)
+                {
+                    num1 = random.Next(1, 100);
+                    num2 = random.Next(1, 100);
+                }
+                else if (difficultyLevelId == 10)
+                {
+                    num1 = random.Next(10, 150);
+                    num2 = random.Next(10, 150);
+                }
+                else if (difficultyLevelId == 11)
+                {
+                    num1 = random.Next(100, 1000);
+                    num2 = random.Next(100, 1000);
+                }
+                else if (difficultyLevelId == 12)
+                {
+                    num1 = random.Next(-100, 100);
+                    num2 = random.Next(10, 100);
+                }
+                else if (difficultyLevelId == 13)
+                {
+                    num1 = random.Next(-500, 200);
+                    num2 = random.Next(-50, 500);
+                }
+                else if (difficultyLevelId == 14)
+                {
+                    num1 = random.Next(-1000, 1000);
+                    num2 = random.Next(-1000, -1);
+                }
+
+
+                answer = num1 - num2;
+
+                var problem = new SubtractionProblemViewModel()
+                {
+                    Id = id,
+                    Description = $"What is the subtraction between {num1} and {num2}",
+                    DifficultyLevelId = difficultyLevelId,
+                    Answer = answer,
+                    UserAnswer = null, // initialize to null
+                    IsCorrect = false,
+                    ProblemTypeId = problemTypeId,
+                    ProblemCategoryId = 1,
+                    Instruction = "smth"
+
+                };
+
+                subProblems.Add(problem);
+                id++;
+            }
+            return subProblems;
+        }
+
+        public IEnumerable<AdditionProblemViewModel> GenerateAdditionProblemsByLevel(int difficultyLevelId, int problemTypeId)
+        {
+          
+
             var random = new Random();
             var problems = new List<AdditionProblemViewModel>();
             int id = 0;
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 10; i++)
             {
                 int num1 = 0;
                 int num2 = 0;
@@ -141,17 +224,17 @@ namespace MathGamesApp.Core.Services
                 else if (difficultyLevelId == 5)
                 {
                     num1 = random.Next(-100, 100);
-                    num2 = random.Next(10, 1000);
+                    num2 = random.Next(10, 100);
                 }
                 else if (difficultyLevelId == 6)
                 {
-                    num1 = random.Next(-1000, 100);
-                    num2 = random.Next(100, 1000);
+                    num1 = random.Next(-500, 200);
+                    num2 = random.Next(-50, 500);
                 }
                 else if (difficultyLevelId == 7)
                 {
                     num1 = random.Next(-1000, 1000);
-                    num2 = random.Next(-1000, 1000);
+                    num2 = random.Next(-1000, -1);
                 }
 
                 
@@ -163,9 +246,9 @@ namespace MathGamesApp.Core.Services
                     Description = $"What is the sum between {num1} and {num2}",
                     DifficultyLevelId = difficultyLevelId,
                     Answer = answer,
-                    UserAnswer = 0, // initialize to null
+                    UserAnswer = null, // initialize to null
                     IsCorrect = false,
-                    ProblemTypeId = 1,
+                    ProblemTypeId = problemTypeId,
                     ProblemCategoryId = 1,
                     Instruction = "smth"
                     
@@ -177,11 +260,6 @@ namespace MathGamesApp.Core.Services
             return problems;
         }
 
-        public IEnumerable<AdditionProblemViewModel> GetAdditionProblemsByLevel(IEnumerable<AdditionProblemViewModel> problems)
-        {
-            
-            return problems.ToList();
-        }
 
         public bool CheckAdditionProblemAnswers(IEnumerable<AdditionProblemViewModel> problems)
         {
@@ -196,6 +274,29 @@ namespace MathGamesApp.Core.Services
             {
                 problem.IsCorrect = problem.Answer == problem.UserAnswer;
                 
+
+                if (!problem.IsCorrect)
+                {
+                    allCorrect = false;
+                }
+            }
+
+            return allCorrect;
+        }
+
+        public bool CheckSubtractionProblemAnswers(IEnumerable<SubtractionProblemViewModel> subProblems)
+        {
+            if (subProblems == null)
+            {
+                throw new ArgumentNullException(nameof(subProblems));
+            }
+
+            bool allCorrect = true;
+
+            foreach (var problem in subProblems)
+            {
+                problem.IsCorrect = problem.Answer == problem.UserAnswer;
+
 
                 if (!problem.IsCorrect)
                 {
