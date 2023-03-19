@@ -2,7 +2,7 @@
 @model IEnumerable<SubtractionProblemViewModel>
 
 
-<h2>Check Addition Problem Answers</h2>
+<h2>Check Subtraction Problem Answers</h2>
 
 @if (Model.All(p => p.IsCorrect))
 {
@@ -11,22 +11,22 @@
 else
 {
     <p class="error">Oops, you got some answers wrong. Here are the correct answers:</p>
-    @foreach (var problem in Model)
+    @foreach (var subProblem in Model)
     {
-        <div class="problem @(problem.IsCorrect ? "correct" : "incorrect")">
-            <p class="problem-description">@problem.Description</p>
+        <div class="problem @(subProblem.IsCorrect ? "correct" : "incorrect")">
+            <p class="problem-description">@subProblem.Description</p>
             <div class="answer-section">
                 <label>Your Answer:</label>
-                <span>@problem.UserAnswer</span>
+                <span>@subProblem.UserAnswer</span>
             </div>
             <div class="answer-section">
                 <label>Correct Answer:</label>
-                <span>@problem.Answer</span>
+                <span>@subProblem.Answer</span>
             </div>
-            @Html.HiddenFor(model => problem.Id)
-            @Html.HiddenFor(model => problem.DifficultyLevelId)
-            @Html.HiddenFor(model => problem.ProblemCategoryId)
-            @Html.HiddenFor(model => problem.ProblemTypeId)
+            @Html.HiddenFor(model => subProblem.Id)
+            @Html.HiddenFor(model => subProblem.DifficultyLevelId)
+            @Html.HiddenFor(model => subProblem.ProblemCategoryId)
+            @Html.HiddenFor(model => subProblem.ProblemTypeId)
         </div>
     }
 }

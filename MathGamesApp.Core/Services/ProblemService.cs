@@ -104,7 +104,6 @@ namespace MathGamesApp.Core.Services
                     ProblemTypeId = problemTypeId
                 });
         }
-
         
 
         public IEnumerable<DifficultyLevel> GetDifficultyLevelsByProblemType(int problemTypeId)
@@ -113,6 +112,7 @@ namespace MathGamesApp.Core.Services
                 .Where(dl => dl.ProblemTypeId == problemTypeId)
                 .ToList();
         }
+
 
         public IEnumerable<SubtractionProblemViewModel> GenerateSubtractionProblemsByLevel(int difficultyLevelId, int problemTypeId)
         {
@@ -166,13 +166,13 @@ namespace MathGamesApp.Core.Services
 
                 answer = num1 - num2;
 
-                var problem = new SubtractionProblemViewModel()
+                var subProblem = new SubtractionProblemViewModel()
                 {
                     Id = id,
                     Description = $"What is the subtraction between {num1} and {num2}",
                     DifficultyLevelId = difficultyLevelId,
                     Answer = answer,
-                    UserAnswer = null, // initialize to null
+                    UserAnswer = null,
                     IsCorrect = false,
                     ProblemTypeId = problemTypeId,
                     ProblemCategoryId = 1,
@@ -180,11 +180,35 @@ namespace MathGamesApp.Core.Services
 
                 };
 
-                subProblems.Add(problem);
+                subProblems.Add(subProblem);
                 id++;
             }
             return subProblems;
         }
+
+        public bool CheckSubtractionProblemAnswers(IEnumerable<SubtractionProblemViewModel> subProblems)
+        {
+            if (subProblems == null)
+            {
+                throw new ArgumentNullException(nameof(subProblems));
+            }
+
+            bool allCorrect = true;
+
+            foreach (var subProblem in subProblems)
+            {
+                subProblem.IsCorrect = subProblem.Answer == subProblem.UserAnswer;
+
+
+                if (!subProblem.IsCorrect)
+                {
+                    allCorrect = false;
+                }
+            }
+
+            return allCorrect;
+        }
+
 
         public IEnumerable<AdditionProblemViewModel> GenerateAdditionProblemsByLevel(int difficultyLevelId, int problemTypeId)
         {
@@ -246,7 +270,7 @@ namespace MathGamesApp.Core.Services
                     Description = $"What is the sum between {num1} and {num2}",
                     DifficultyLevelId = difficultyLevelId,
                     Answer = answer,
-                    UserAnswer = null, // initialize to null
+                    UserAnswer = null,
                     IsCorrect = false,
                     ProblemTypeId = problemTypeId,
                     ProblemCategoryId = 1,
@@ -284,28 +308,7 @@ namespace MathGamesApp.Core.Services
             return allCorrect;
         }
 
-        public bool CheckSubtractionProblemAnswers(IEnumerable<SubtractionProblemViewModel> subProblems)
-        {
-            if (subProblems == null)
-            {
-                throw new ArgumentNullException(nameof(subProblems));
-            }
-
-            bool allCorrect = true;
-
-            foreach (var problem in subProblems)
-            {
-                problem.IsCorrect = problem.Answer == problem.UserAnswer;
-
-
-                if (!problem.IsCorrect)
-                {
-                    allCorrect = false;
-                }
-            }
-
-            return allCorrect;
-        }
+        
 
     }
 }

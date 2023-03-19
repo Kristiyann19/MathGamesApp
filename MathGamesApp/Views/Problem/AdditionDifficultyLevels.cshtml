@@ -11,19 +11,3 @@
     </a>
 }
 
-@*@model IEnumerable<DifficultyLevelsViewModel>
-
-@{
-    ViewData["Title"] = "Difficulty Level";
-}
-
-<div class="row">
-    @foreach(var level in Model)
-    {
-        <form asp-controller="Problem" asp-action="GenerateAdditionProblems" method="get">
-            <input type="hidden" name="difficultyLevelId" value="@level.Id" />
-            <input type="hidden" name="problemTypeId" value="@level.ProblemTypeId" />
-            <input type="submit" value="@level.Name" />
-        </form>
-    }
-</div>*@

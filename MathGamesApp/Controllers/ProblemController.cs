@@ -9,12 +9,10 @@ namespace MathGamesApp.Controllers
     public class ProblemController : Controller
     {
         private readonly IProblemService problemService;  
-        private readonly ApplicationDbContext context;
 
-        public ProblemController(IProblemService _problemService, ApplicationDbContext _context)
+        public ProblemController(IProblemService _problemService)
         {
             problemService = _problemService;
-            context = _context;
         }
 
 
@@ -32,34 +30,33 @@ namespace MathGamesApp.Controllers
                 ProblemCategoryId = 1,
                 ProblemTypeId = problemTypeId,
                 IsCorrect = false,
-                // initialize answer to null as user has not submitted anything yet
+
             });
 
             return View(additionProblemViewModels);
         }
 
+
         public IActionResult SubtractionProblems(int difficultyLevelId, int problemTypeId)
         {
             var subProblems = problemService.GenerateSubtractionProblemsByLevel(difficultyLevelId, problemTypeId);
 
-            var subtractionProblemViewModels = subProblems.Select(p => new SubtractionProblemViewModel
+            var subtractionProblemViewModels = subProblems.Select(sp => new SubtractionProblemViewModel
             {
-                Id = p.Id,
-                Description = p.Description,
-                UserAnswer = p.UserAnswer,
-                Answer = p.Answer,
+                Id = sp.Id,
+                Description = sp.Description,
+                UserAnswer = sp.UserAnswer,
+                Answer = sp.Answer,
                 DifficultyLevelId = difficultyLevelId,
                 ProblemCategoryId = 1,
-                ProblemTypeId = 2, // set to 2 to indicate subtraction problems
+                ProblemTypeId = problemTypeId, 
                 IsCorrect = false,
-                // initialize answer to null as user has not submitted anything yet
             });
 
             return View(subtractionProblemViewModels);
         }
 
-        [HttpPost]
-        
+        [HttpPost]       
         public IActionResult CheckAnswersAddition(IEnumerable<AdditionProblemViewModel> problems)
         {
             
@@ -78,8 +75,8 @@ namespace MathGamesApp.Controllers
             return View("CheckAnswersAddition", problems);
         }
 
-        [HttpPost]
 
+        [HttpPost]
         public IActionResult CheckAnswersSubtraction(IEnumerable<SubtractionProblemViewModel> subProblems)
         {
 

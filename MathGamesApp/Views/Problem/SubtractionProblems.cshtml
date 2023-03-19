@@ -13,20 +13,20 @@
       </tr>
     </thead>
     <tbody>
-      @foreach (var problem in Model)
+      @foreach (var subProblem in Model)
       {
         <tr>
-          <td>@problem.Description</td>
+          <td>@subProblem.Description</td>
           <td>
             <div class="input-group">
-              <input type="hidden" name="problems[@problem.Id].Id" value="@problem.Id" />
-              <input type="hidden" name="problems[@problem.Id].DifficultyLevelId" value="@problem.DifficultyLevelId" />
-              <input type="hidden" name="problems[@problem.Id].ProblemCategoryId" value="@problem.ProblemCategoryId" />
-              <input type="hidden" name="problems[@problem.Id].ProblemTypeId" value="@problem.ProblemTypeId" />
-              <input type="number" class="form-control" name="problems[@problem.Id].UserAnswer" value="@problem.UserAnswer" />
-              <input type="hidden" name="problems[@problem.Id].Answer" value="@problem.Answer" />
-              <input type="hidden" name="problems[@problem.Id].Description" value="@problem.Description" />
-              <input type="hidden" name="problems[@problem.Id].IsCorrect" value="@problem.IsCorrect" />
+              <input type="hidden" name="problems[@subProblem.Id].Id" value="@subProblem.Id" />
+              <input type="hidden" name="problems[@subProblem.Id].DifficultyLevelId" value="@subProblem.DifficultyLevelId" />
+              <input type="hidden" name="problems[@subProblem.Id].ProblemCategoryId" value="@subProblem.ProblemCategoryId" />
+              <input type="hidden" name="problems[@subProblem.Id].ProblemTypeId" value="@subProblem.ProblemTypeId" />
+              <input type="number" class="form-control" name="problems[@subProblem.Id].UserAnswer" value="@subProblem.UserAnswer" />
+              <input type="hidden" name="problems[@subProblem.Id].Answer" value="@subProblem.Answer" />
+              <input type="hidden" name="problems[@subProblem.Id].Description" value="@subProblem.Description" />
+              <input type="hidden" name="problems[@subProblem.Id].IsCorrect" value="@subProblem.IsCorrect" />
               <div class="input-group-append">
               </div>
             </div>
