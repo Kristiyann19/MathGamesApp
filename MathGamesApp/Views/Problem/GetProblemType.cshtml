@@ -9,8 +9,11 @@
     @foreach (var type in Model)
     {
         <div class="col-md-3 mb-4">
-            <div class="type-card" onclick="location.href='@Url.Action(type.Id == 1 ? "AdditionDifficultyLevels" : "SubtractionDifficultyLevels", "Problem", new { typeId = type.Id })';" style="cursor: pointer;">
-                <div class="type-card-header">
+           <div class="type-card" onclick="location.href='@Url.Action(type.Id == 1 ? "AdditionDifficultyLevels" : 
+                                                                    (type.Id == 2 ? "SubtractionDifficultyLevels" : 
+                                                                    (type.Id == 3 ? "MultiplicationDifficultyLevels" : "DivisionDifficultyLevels")), "Problem", 
+                                                                    new { typeId = type.Id })';" style="cursor: pointer;">
+                <div class="type-card-header">          
                     <h5 class="type-card-name">@type.Name</h5>
                     <form class="type-card-description" asp-controller="Problem" asp-action="Information" asp-route-id="@type.Id">
                         <input type="submit" value="?"/>

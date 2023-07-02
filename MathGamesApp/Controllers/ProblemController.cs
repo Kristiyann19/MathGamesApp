@@ -36,6 +36,46 @@ namespace MathGamesApp.Controllers
             return View(additionProblemViewModels);
         }
 
+        public IActionResult DivisionProblems(int difficultyLevelId, int problemTypeId)
+        {
+            var problems = problemService.GenerateDivisionProblemsByLevel(difficultyLevelId, problemTypeId);
+
+            var divisionProblemViewModels = problems.Select(p => new DivisionProblemViewModel
+            {
+                Id = p.Id,
+                Description = p.Description,
+                UserAnswer = p.UserAnswer,
+                Answer = p.Answer,
+                DifficultyLevelId = difficultyLevelId,
+                ProblemCategoryId = 1,
+                ProblemTypeId = problemTypeId,
+                IsCorrect = false,
+
+            });
+
+            return View(divisionProblemViewModels);
+        }
+
+        public IActionResult MultiplicationProblems(int difficultyLevelId, int problemTypeId)
+        {
+            var problems = problemService.GenerateMultiplicationProblemsByLevel(difficultyLevelId, problemTypeId);
+
+            var multiplicationProblemViewModels = problems.Select(p => new MultiplicationViewModel
+            {
+                Id = p.Id,
+                Description = p.Description,
+                UserAnswer = p.UserAnswer,
+                Answer = p.Answer,
+                DifficultyLevelId = difficultyLevelId,
+                ProblemCategoryId = 1,
+                ProblemTypeId = problemTypeId,
+                IsCorrect = false,
+
+            });
+
+            return View(multiplicationProblemViewModels);
+        }
+
 
         public IActionResult SubtractionProblems(int difficultyLevelId, int problemTypeId)
         {
@@ -59,7 +99,7 @@ namespace MathGamesApp.Controllers
         [HttpPost]       
         public IActionResult CheckAnswersAddition(IEnumerable<AdditionProblemViewModel> problems)
         {
-            
+          
             bool allCorrect = problemService.CheckAdditionProblemAnswers(problems);
 
             if (allCorrect)
@@ -73,6 +113,25 @@ namespace MathGamesApp.Controllers
             }
 
             return View("CheckAnswersAddition", problems);
+        }
+
+        [HttpPost]
+        public IActionResult CheckAnswersMultiplication(IEnumerable<MultiplicationViewModel> problems)
+        {
+
+            bool allCorrect = problemService.CheckMultiplicationProblemAnswers(problems);
+
+            if (allCorrect)
+            {
+                ViewData["Message"] = "Congratulations! All your answers are correct.";
+            }
+            else
+            {
+
+                ViewData["Message"] = "Sorry, some of your answers are incorrect. Please try again.";
+            }
+
+            return View("CheckAnswersMultiplication", problems);
         }
 
 
@@ -93,6 +152,25 @@ namespace MathGamesApp.Controllers
             }
 
             return View("CheckAnswersSubtraction", subProblems);
+        }
+
+        [HttpPost]
+        public IActionResult CheckAnswersDivision(IEnumerable<DivisionProblemViewModel> divProblems)
+        {
+
+            bool allCorrect = problemService.CheckDivisionProblemAnswers(divProblems);
+
+            if (allCorrect)
+            {
+                ViewData["Message"] = "Congratulations! All your answers are correct.";
+            }
+            else
+            {
+
+                ViewData["Message"] = "Sorry, some of your answers are incorrect. Please try again.";
+            }
+
+            return View("CheckAnswersDivision", divProblems);
         }
 
 
@@ -144,6 +222,34 @@ namespace MathGamesApp.Controllers
                 Id = d.Id,
                 Name = d.Name,
                 ProblemTypeId = 1
+            });
+
+            return View(difficultyLevelViewModels);
+        }
+
+        public IActionResult MultiplicationDifficultyLevels()
+        {
+            var difficultyLevels = problemService.GetDifficultyLevelsByProblemType(3);
+
+            var difficultyLevelViewModels = difficultyLevels.Select(d => new DifficultyLevelsViewModel
+            {
+                Id = d.Id,
+                Name = d.Name,
+                ProblemTypeId = 3
+            });
+
+            return View(difficultyLevelViewModels);
+        }
+
+        public IActionResult DivisionDifficultyLevels()
+        {
+            var difficultyLevels = problemService.GetDifficultyLevelsByProblemType(4);
+
+            var difficultyLevelViewModels = difficultyLevels.Select(d => new DifficultyLevelsViewModel
+            {
+                Id = d.Id,
+                Name = d.Name,
+                ProblemTypeId = 4
             });
 
             return View(difficultyLevelViewModels);

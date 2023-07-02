@@ -74,7 +74,7 @@ namespace MathGamesApp.Core.Services
 
         }
 
-        
+
         public async Task<ProblemTypeViewModel> GetTypeInformationAsync(int id)
         {
             return await context.ProblemTypes
@@ -104,7 +104,7 @@ namespace MathGamesApp.Core.Services
                     ProblemTypeId = problemTypeId
                 });
         }
-        
+
 
         public IEnumerable<DifficultyLevel> GetDifficultyLevelsByProblemType(int problemTypeId)
         {
@@ -212,7 +212,7 @@ namespace MathGamesApp.Core.Services
 
         public IEnumerable<AdditionProblemViewModel> GenerateAdditionProblemsByLevel(int difficultyLevelId, int problemTypeId)
         {
-          
+
 
             var random = new Random();
             var problems = new List<AdditionProblemViewModel>();
@@ -223,7 +223,7 @@ namespace MathGamesApp.Core.Services
                 int num1 = 0;
                 int num2 = 0;
                 int answer;
-                
+
 
                 if (difficultyLevelId == 1)
                 {
@@ -261,7 +261,7 @@ namespace MathGamesApp.Core.Services
                     num2 = random.Next(-1000, -1);
                 }
 
-                
+
                 answer = num1 + num2;
 
                 var problem = new AdditionProblemViewModel()
@@ -275,8 +275,8 @@ namespace MathGamesApp.Core.Services
                     ProblemTypeId = problemTypeId,
                     ProblemCategoryId = 1,
                     Instruction = "smth"
-                    
-                };  
+
+                };
 
                 problems.Add(problem);
                 id++;
@@ -297,7 +297,7 @@ namespace MathGamesApp.Core.Services
             foreach (var problem in problems)
             {
                 problem.IsCorrect = problem.Answer == problem.UserAnswer;
-                
+
 
                 if (!problem.IsCorrect)
                 {
@@ -308,7 +308,195 @@ namespace MathGamesApp.Core.Services
             return allCorrect;
         }
 
-        
+        public IEnumerable<MultiplicationViewModel> GenerateMultiplicationProblemsByLevel(int difficultyLevelId, int problemTypeId)
+        {
 
+            var random = new Random();
+            var mulProblems = new List<MultiplicationViewModel>();
+            int id = 0;
+
+            for (int i = 0; i < 10; i++)
+            {
+                int num1 = 0;
+                int num2 = 0;
+                int answer;
+
+
+                if (difficultyLevelId == 15)
+                {
+                    num1 = random.Next(1, 10);
+                    num2 = random.Next(1, 10);
+                }
+                else if (difficultyLevelId == 16)
+                {
+                    num1 = random.Next(1, 100);
+                    num2 = random.Next(1, 100);
+                }
+                else if (difficultyLevelId == 17)
+                {
+                    num1 = random.Next(10, 150);
+                    num2 = random.Next(10, 150);
+                }
+                else if (difficultyLevelId == 18)
+                {
+                    num1 = random.Next(100, 1000);
+                    num2 = random.Next(100, 1000);
+                }
+                else if (difficultyLevelId == 19)
+                {
+                    num1 = random.Next(-100, 100);
+                    num2 = random.Next(10, 100);
+                }
+                else if (difficultyLevelId == 20)
+                {
+                    num1 = random.Next(-500, 200);
+                    num2 = random.Next(-50, 500);
+                }
+                else if (difficultyLevelId == 21)
+                {
+                    num1 = random.Next(-1000, 1000);
+                    num2 = random.Next(-1000, -1);
+                }
+
+
+                answer = num1 * num2;
+
+                var mulProblem = new MultiplicationViewModel()
+                {
+                    Id = id,
+                    Description = $"What is the multiplication between {num1} and {num2}",
+                    DifficultyLevelId = difficultyLevelId,
+                    Answer = answer,
+                    UserAnswer = null,
+                    IsCorrect = false,
+                    ProblemTypeId = problemTypeId,
+                    ProblemCategoryId = 1,
+                    Instruction = "smth"
+
+                };
+
+                mulProblems.Add(mulProblem);
+                id++;
+            }
+            return mulProblems;
+        }
+
+        public bool CheckMultiplicationProblemAnswers(IEnumerable<MultiplicationViewModel> mulProblems)
+        {
+            if (mulProblems == null)
+            {
+                throw new ArgumentNullException(nameof(mulProblems));
+            }
+
+            bool allCorrect = true;
+
+            foreach (var problem in mulProblems)
+            {
+                problem.IsCorrect = problem.Answer == problem.UserAnswer;
+
+
+                if (!problem.IsCorrect)
+                {
+                    allCorrect = false;
+                }
+            }
+
+            return allCorrect;
+        }
+
+        public IEnumerable<DivisionProblemViewModel> GenerateDivisionProblemsByLevel(int difficultyLevelId, int problemTypeId)
+        {
+            var random = new Random();
+            var divProblems = new List<DivisionProblemViewModel>();
+            int id = 0;
+
+            for (int i = 0; i < 10; i++)
+            {
+                int num1 = 0;
+                int num2 = 0;
+                int answer;
+
+
+                if (difficultyLevelId == 22)
+                {
+                    num1 = random.Next(1, 10);
+                    num2 = random.Next(1, 10);
+                }
+                else if (difficultyLevelId == 23)
+                {
+                    num1 = random.Next(1, 100);
+                    num2 = random.Next(1, 100);
+                }
+                else if (difficultyLevelId == 24)
+                {
+                    num1 = random.Next(10, 150);
+                    num2 = random.Next(10, 150);
+                }
+                else if (difficultyLevelId == 25)
+                {
+                    num1 = random.Next(100, 1000);
+                    num2 = random.Next(100, 1000);
+                }
+                else if (difficultyLevelId == 26)
+                {
+                    num1 = random.Next(-100, 100);
+                    num2 = random.Next(10, 100);
+                }
+                else if (difficultyLevelId == 27)
+                {
+                    num1 = random.Next(-500, 200);
+                    num2 = random.Next(-50, 500);
+                }
+                else if (difficultyLevelId == 28)
+                {
+                    num1 = random.Next(-1000, 1000);
+                    num2 = random.Next(-1000, -1);
+                }
+
+
+                answer = num1 / num2;
+
+                var divProblem = new DivisionProblemViewModel()
+                {
+                    Id = id,
+                    Description = $"What is the Division between {num1} and {num2}",
+                    DifficultyLevelId = difficultyLevelId,
+                    Answer = answer,
+                    UserAnswer = null,
+                    IsCorrect = false,
+                    ProblemTypeId = problemTypeId,
+                    ProblemCategoryId = 1,
+                    Instruction = "smth"
+
+                };
+
+                divProblems.Add(divProblem);
+                id++;
+            }
+            return divProblems;
+        }
+
+        public bool CheckDivisionProblemAnswers(IEnumerable<DivisionProblemViewModel> divProblems)
+        {
+            if (divProblems == null)
+            {
+                throw new ArgumentNullException(nameof(divProblems));
+            }
+
+            bool allCorrect = true;
+
+            foreach (var problem in divProblems)
+            {
+                problem.IsCorrect = problem.Answer == problem.UserAnswer;
+
+
+                if (!problem.IsCorrect)
+                {
+                    allCorrect = false;
+                }
+            }
+
+            return allCorrect;
+        }
     }
 }

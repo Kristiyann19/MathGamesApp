@@ -36,8 +36,24 @@ namespace MathGamesApp.Infrastructure.Data.Configurations
                     Instruction = "Take away one number from another",
                     ProblemCategoryId = 1,
                     ImageUrl = "https://www.theschoolrun.com/sites/theschoolrun.com/files/article_images/subtraction.png"
+                },
+                new ProblemType()
+                {
+                    Id = 3,
+                    Name = "Multiplication",
+                    Instruction = "Multiply the first number with the second",
+                    ProblemCategoryId = 1,
+                    ImageUrl = "https://www.pngwing.com/en/free-png-mloer"
+                },
+                new ProblemType()
+                {
+                    Id = 4,
+                    Name = "Division",
+                    Instruction = "Divise the first number with the second",
+                    ProblemCategoryId = 1,
+                    ImageUrl = "https://www.pngwing.com/en/free-png-mloer"
                 }
-                
+
             };
 
             return problemTypes;

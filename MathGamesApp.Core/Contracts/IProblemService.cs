@@ -24,11 +24,19 @@ namespace MathGamesApp.Core.Contracts
 
         IEnumerable<AdditionProblemViewModel> GenerateAdditionProblemsByLevel(int difficultyLevelId, int problemTypeId);
 
+        IEnumerable<DivisionProblemViewModel> GenerateDivisionProblemsByLevel(int difficultyLevelId, int problemTypeId);
+
+        IEnumerable<MultiplicationViewModel> GenerateMultiplicationProblemsByLevel(int difficultyLevelId, int problemTypeId);
+
         IEnumerable<SubtractionProblemViewModel> GenerateSubtractionProblemsByLevel(int difficultyLevelId, int problemTypeId);
 
         bool CheckSubtractionProblemAnswers(IEnumerable<SubtractionProblemViewModel> subProblems);
 
+        bool CheckMultiplicationProblemAnswers(IEnumerable<MultiplicationViewModel> mulProblems);
+
         bool CheckAdditionProblemAnswers(IEnumerable<AdditionProblemViewModel> problems);
+
+        bool CheckDivisionProblemAnswers(IEnumerable<DivisionProblemViewModel> divProblems);
 
         IEnumerable<DifficultyLevel> GetDifficultyLevelsByProblemType(int problemTypeId);
 

@@ -4,6 +4,7 @@ using MathGamesApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MathGamesApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230702134145_type3")]
+    partial class type3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,48 +171,6 @@ namespace MathGamesApp.Infrastructure.Migrations
                             Id = 21,
                             Name = "7th Grade",
                             ProblemTypeId = 3
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Name = "1st Grade",
-                            ProblemTypeId = 4
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Name = "2nd Grade",
-                            ProblemTypeId = 4
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Name = "3th Grade",
-                            ProblemTypeId = 4
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Name = "4th Grade",
-                            ProblemTypeId = 4
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Name = "5th Grade",
-                            ProblemTypeId = 4
-                        },
-                        new
-                        {
-                            Id = 27,
-                            Name = "6th Grade",
-                            ProblemTypeId = 4
-                        },
-                        new
-                        {
-                            Id = 28,
-                            Name = "7th Grade",
-                            ProblemTypeId = 4
                         });
                 });
 
@@ -371,15 +331,6 @@ namespace MathGamesApp.Infrastructure.Migrations
                             Instruction = "Multiply the first number with the second",
                             IsActive = false,
                             Name = "Multiplication",
-                            ProblemCategoryId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ImageUrl = "https://www.pngwing.com/en/free-png-mloer",
-                            Instruction = "Divise the first number with the second",
-                            IsActive = false,
-                            Name = "Division",
                             ProblemCategoryId = 1
                         });
                 });
