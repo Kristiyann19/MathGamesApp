@@ -12,6 +12,11 @@ namespace MathGamesApp.Infrastructure.Data.Entities
         public string FirstName { get; set; } = null!;
 
         public string LastName { get; set; } = null!;
+
+        public int Level { get; set; }
+
+        public int Experience { get; set; }
+
         //DateOfBirth: To store the user's date of birth.
         //Gender: To store the user's gender.
         //Country and City: To store the user's location.

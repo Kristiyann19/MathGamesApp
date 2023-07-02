@@ -27,7 +27,7 @@ namespace MathGamesApp.Infrastructure.Data
         public DbSet<Problem> Problems { get; set; }
         public DbSet<ProblemCategory> ProblemCategories { get; set; }
         public DbSet<ProblemType> ProblemTypes { get; set; }
-        public DbSet<UserLevel> UserLevels { get; set; }
+       
         public DbSet<DifficultyLevel> DifficultyLevels { get; set; }
         public DbSet<AdditionProblem> AdditionProblems { get; set; }
 
